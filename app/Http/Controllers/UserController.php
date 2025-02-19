@@ -1,0 +1,75 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+
+class UserController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        return User::get();
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        $data_user=[
+            'name'=>$request->name,
+            'email'=>$request->email,
+            'password'=>Hash::make($request->password),
+            'role'=>$request->role,
+            'abilities'=>$request->abilities
+        ];
+
+        $create_user=User::create($data_user);
+
+        return response()->json([
+            "status"=>200,
+            "message"=>"Usuario creado correctamente.",
+            "data"=>$create_user
+        ],200);
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(User $id)
+    {
+        return $id;
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, User $id)
+    {
+        $id->update($request->all());
+        return response()->json([
+            "status"=>200,
+            "message"=>"Usuario actualizado correctamente.",
+            "data"=>$id
+        ],200);
+
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(User $id)
+    {
+        $id->delete();
+
+        return response()->json([
+            "status"=>200,
+            "message"=>"Usuario eliminado."
+        ],200);
+    }
+}
