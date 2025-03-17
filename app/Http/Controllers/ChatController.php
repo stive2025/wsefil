@@ -17,7 +17,7 @@ class ChatController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     */
+    */
     public function store(Request $request)
     {
         $create_chat=Chat::create($request->all());

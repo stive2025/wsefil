@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ChatController;
+use App\Http\Controllers\ConnectionController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\UserController;
@@ -27,8 +28,8 @@ Route::delete('/users/{id}',[UserController::class,'destroy']);
 
 Route::get('/messages',[MessageController::class,'index']);
 Route::get('/messages/{id}',[MessageController::class,'show']);
-Route::post('/messages',[MessageController::class,'store']);
 Route::post('/messages/updateACK',[MessageController::class,'updateACK']);
+Route::post('/messages',[MessageController::class,'store']);
 Route::put('/messages/{id}',[MessageController::class,'update']);
 Route::delete('/messages/{id}',[MessageController::class,'destroy']);
 
@@ -51,3 +52,14 @@ Route::get('/contacts/{id}',[ContactController::class,'show']);
 Route::post('/contacts',[ContactController::class,'store']);
 Route::put('/contacts/{id}',[ContactController::class,'update']);
 Route::delete('/contacts/{id}',[ContactController::class,'destroy']);
+
+ /**
+ * ================================> EndPoints para Conexiones de WhatsApp
+ */
+
+Route::get('/connections',[ConnectionController::class,'index']);
+Route::get('/connections/{id}',[ConnectionController::class,'show']);
+Route::post('/connections',[ConnectionController::class,'store']);
+Route::put('/connections/{id}',[ConnectionController::class,'update']);
+Route::delete('/connections/{id}',[ConnectionController::class,'destroy']);
+ 
