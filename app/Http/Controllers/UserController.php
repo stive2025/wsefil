@@ -13,7 +13,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        return User::get();
+        return User::when(request()->filled('name'),function($query){
+                $query->where('name','REGEXP',request('name'));
+            })
+            ->paginate(7);
     }
 
     /**
@@ -41,9 +44,15 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $id)
+    public function show($id)
     {
-        return $id;
+        $user=User::find($id);
+
+        return response()->json([
+            "status"=>200,
+            "message"=>($user==null) ? "El usuario con ID $id, no existe." : "Usuario encontrado.",
+            "data"=>$user
+        ],200);
     }
 
     /**

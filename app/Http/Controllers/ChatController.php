@@ -12,7 +12,7 @@ class ChatController extends Controller
      */
     public function index()
     {
-        return Chat::get();
+        return Chat::paginate(7);
     }
 
     /**
@@ -21,6 +21,7 @@ class ChatController extends Controller
     public function store(Request $request)
     {
         $create_chat=Chat::create($request->all());
+
         return response()->json([
             "status"=>200,
             "message"=>"Chat creado correctamente.",
@@ -33,7 +34,10 @@ class ChatController extends Controller
      */
     public function show(Chat $id)
     {
-        return $id;
+        $chat=$id;
+        $chat->messages=$chat->find($id->id)->messages;
+        
+        return $chat;
     }
 
     /**

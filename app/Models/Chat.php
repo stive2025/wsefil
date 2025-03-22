@@ -16,7 +16,7 @@ class Chat extends Model
         'contact_id',
         'user_id'
     ];
-
+    
     public function messages(){
         return $this->hasMany(Message::class)->chaperone();
     }

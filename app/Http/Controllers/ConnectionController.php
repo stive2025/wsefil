@@ -12,7 +12,12 @@ class ConnectionController extends Controller
      */
     public function index()
     {
-        //
+        $connections=Connection::get();
+
+        return response()->json([
+            "status"=>200,
+            "data"=>$connections
+        ],200);
     }
     
     /**
@@ -20,25 +25,36 @@ class ConnectionController extends Controller
      */
     public function store(Request $request)
     {
-        $data=[
-            
-        ];
 
-        $create_connection=Connection::create($data);
+        $connection=Connection::first();
+
+        if($connection==null){
+            $create_connection=Connection::create([
+                'qr_code'=>$request->code_qr,
+                'status'=>"PENDING"
+            ]);
+        }else{
+            $update_connection=Connection::where('id',$connection->id)->update([
+                'qr_code'=>$request->code_qr,
+                'status'=>$request->status
+            ]);
+        }
 
         return response()->json([
             "status"=>200,
-            "message"=>"Conexión creada correctamente.",
-            "data"=>$create_connection
+            "message"=>"Conexión creada correctamente."
         ],200);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
+    public function show(Connection $id)
+    {   
+        return response()->json([
+            "status"=>200,
+            "data"=>$id
+        ],200);
     }
 
     /**
@@ -46,7 +62,14 @@ class ConnectionController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $connection=Connection::first();
+
+        $update_connection=Connection::where('id',$connection->id)->update($request->all());
+
+        return response()->json([
+            "status"=>200,
+            "message"=>"Estado de conexión actualizado."
+        ],200);
     }
 
     /**

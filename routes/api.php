@@ -3,6 +3,7 @@
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\ConnectionController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -16,10 +17,11 @@ Route::get('/user', function (Request $request) {
  * ================================> EndPoints para Usuarios
  */
 
+Route::post('/login',[LoginController::class,'login']);
 Route::get('/users',[UserController::class,'index']);
 Route::get('/users/{id}',[UserController::class,'show']);
 Route::post('/users',[UserController::class,'store']);
-Route::put('/users/{id}',[UserController::class,'update']);
+Route::patch('/users/{id}',[UserController::class,'update']);
 Route::delete('/users/{id}',[UserController::class,'destroy']);
 
  /**
@@ -30,7 +32,7 @@ Route::get('/messages',[MessageController::class,'index']);
 Route::get('/messages/{id}',[MessageController::class,'show']);
 Route::post('/messages/updateACK',[MessageController::class,'updateACK']);
 Route::post('/messages',[MessageController::class,'store']);
-Route::put('/messages/{id}',[MessageController::class,'update']);
+Route::patch('/messages/{id}',[MessageController::class,'update']);
 Route::delete('/messages/{id}',[MessageController::class,'destroy']);
 
  /**
@@ -40,7 +42,7 @@ Route::delete('/messages/{id}',[MessageController::class,'destroy']);
 Route::get('/chats',[ChatController::class,'index']);
 Route::get('/chats/{id}',[ChatController::class,'show']);
 Route::post('/chats',[ChatController::class,'store']);
-Route::put('/chats/{id}',[ChatController::class,'update']);
+Route::patch('/chats/{id}',[ChatController::class,'update']);
 Route::delete('/chats/{id}',[ChatController::class,'destroy']);
 
  /**
@@ -50,7 +52,7 @@ Route::delete('/chats/{id}',[ChatController::class,'destroy']);
 Route::get('/contacts',[ContactController::class,'index']);
 Route::get('/contacts/{id}',[ContactController::class,'show']);
 Route::post('/contacts',[ContactController::class,'store']);
-Route::put('/contacts/{id}',[ContactController::class,'update']);
+Route::patch('/contacts/{id}',[ContactController::class,'update']);
 Route::delete('/contacts/{id}',[ContactController::class,'destroy']);
 
  /**

@@ -12,7 +12,10 @@ class ContactController extends Controller
      */
     public function index()
     {
-        return Contact::get();
+        return Contact::when(request()->filled('name'),function($query){
+            $query->where('name','REGEXP',request('name'));
+        })
+        ->paginate(7);
     }
 
     /**
@@ -42,6 +45,7 @@ class ContactController extends Controller
     public function update(Request $request, Contact $id)
     {
         $id->update($request->all());
+        
         return response()->json([
             "status"=>200,
             "message"=>"Contacto actualizado correctamente.",
