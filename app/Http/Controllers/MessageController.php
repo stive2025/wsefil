@@ -64,6 +64,7 @@ class MessageController extends Controller
                         'contact_id'=>$contact_id,
                         'user_id'=>$request->user_id
                     ]);
+                    
         
                     $chat_id=$create_chat->id;
 
@@ -105,7 +106,7 @@ class MessageController extends Controller
             'created_by'=>$request->user_id,
             'chat_id'=>$chat_id
         ];
-        
+
         $create_message=Message::create($data);
 
         return response()->json([
