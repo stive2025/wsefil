@@ -64,7 +64,6 @@ class MessageController extends Controller
                         'contact_id'=>$contact_id,
                         'user_id'=>$request->user_id
                     ]);
-                    
         
                     $chat_id=$create_chat->id;
 
