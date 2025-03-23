@@ -66,7 +66,6 @@ class MessageController extends Controller
                     ]);
         
                     $chat_id=$create_chat->id;
-
                 }
 
             }else{
