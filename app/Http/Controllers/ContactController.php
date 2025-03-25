@@ -25,7 +25,7 @@ class ContactController extends Controller
     {   
 
         if(preg_match('/^\d{11,}$/',$request->phone_number)){
-            
+
             if(Contact::where('phone_number',$request->phone_number)->first()==null){
                 $create_contact=Contact::create($request->all());
 
@@ -36,12 +36,10 @@ class ContactController extends Controller
                 ],200);
 
             }else{
-                $create_contact=Contact::create($request->all());
 
                 return response()->json([
                     "status"=>400,
-                    "message"=>"Contacto ya existe.",
-                    "data"=>$create_contact
+                    "message"=>"Contacto ya existe."
                 ],200);
             }
 
