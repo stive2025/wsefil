@@ -24,8 +24,8 @@ class ContactController extends Controller
     public function store(Request $request)
     {   
 
-        if(preg_match('/^(?:[1-9]\d{1,}|10)$/',$request->phone_number)){
-
+        if(preg_match('/^\d{11,}$/',$request->phone_number)){
+            
             if(Contact::where('phone_number',$request->phone_number)->first()==null){
                 $create_contact=Contact::create($request->all());
 
@@ -51,7 +51,7 @@ class ContactController extends Controller
                 "message"=>"Contacto no cumple formato para un número de whatsapp."
             ],200);
         }
-        
+
     }
 
     /**
