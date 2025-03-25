@@ -40,14 +40,14 @@ class ContactController extends Controller
                 return response()->json([
                     "status"=>400,
                     "message"=>"Contacto ya existe."
-                ],200);
+                ],400);
             }
 
         }else{
             return response()->json([
                 "status"=>400,
                 "message"=>"Contacto no cumple formato para un número de whatsapp."
-            ],200);
+            ],400);
         }
 
     }
