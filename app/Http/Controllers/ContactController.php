@@ -22,13 +22,36 @@ class ContactController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $create_contact=Contact::create($request->all());
-        return response()->json([
-            "status"=>200,
-            "message"=>"Contacto creado correctamente.",
-            "data"=>$create_contact
-        ],200);
+    {   
+
+        if(preg_match('/^(?:[1-9]\d{1,}|10)$/',$request->phone_number)){
+
+            if(Contact::where('phone_number',$request->phone_number)->first()==null){
+                $create_contact=Contact::create($request->all());
+
+                return response()->json([
+                    "status"=>200,
+                    "message"=>"Contacto creado correctamente.",
+                    "data"=>$create_contact
+                ],200);
+
+            }else{
+                $create_contact=Contact::create($request->all());
+
+                return response()->json([
+                    "status"=>400,
+                    "message"=>"Contacto ya existe.",
+                    "data"=>$create_contact
+                ],200);
+            }
+
+        }else{
+            return response()->json([
+                "status"=>400,
+                "message"=>"Contacto no cumple formato para un número de whatsapp."
+            ],200);
+        }
+        
     }
 
     /**
