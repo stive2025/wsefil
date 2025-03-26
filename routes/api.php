@@ -30,6 +30,7 @@ Route::delete('/users/{id}',[UserController::class,'destroy']);
 
 Route::get('/messages',[MessageController::class,'index']);
 Route::get('/messages/{id}',[MessageController::class,'show']);
+Route::post('/messages/connect',[MessageController::class,'connectmessage']);
 Route::post('/messages/updateACK',[MessageController::class,'updateACK']);
 Route::post('/messages',[MessageController::class,'store']);
 Route::patch('/messages/{id}',[MessageController::class,'update']);

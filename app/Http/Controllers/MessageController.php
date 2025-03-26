@@ -6,6 +6,8 @@ use App\Models\Chat;
 use App\Models\Contact;
 use App\Models\Message;
 use Illuminate\Http\Request;
+use WebSocket\Client;
+use Exception;
 
 class MessageController extends Controller
 {
@@ -19,7 +21,37 @@ class MessageController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     */
+    */
+
+    public function push($data){
+        try {
+        
+            $client = new Client("ws://127.0.0.1:8081");
+            $client->send(json_encode($data));
+            $client->close();
+            
+        } catch (Exception $e) {
+            return $e;
+        }
+    }
+
+    public function connectmessage(Request $request){
+        $chat_id=$request->chat_id;
+
+        Chat::where('id',$request->chat_id)->update([
+            'last_message'=>$request->body,
+            'unread_message'=>($request->from_me==false) ? Chat::where('id',$request->chat_id)->first()->unread_message+1 : 0,
+        ]);
+
+        $data=[
+            'body'=>$request->body,
+            'number'=>$request->number,
+            'chat_id'=>$chat_id
+        ];
+
+        $ws=$this->push($data);
+    }
+
     public function store(Request $request)
     {
         //  Creamos el mensaje
@@ -31,7 +63,7 @@ class MessageController extends Controller
 
             Chat::where('id',$request->chat_id)->update([
                 'last_message'=>$request->body,
-                'unread_message'=>Chat::where('id',$request->chat_id)->first()->unread_message+1,
+                'unread_message'=>($request->from_me==false) ? Chat::where('id',$request->chat_id)->first()->unread_message+1 : 0,
             ]);
             
         }else{
@@ -71,7 +103,7 @@ class MessageController extends Controller
 
             }else{
                 $create_contact=Contact::create([
-                    'name'=>"+$request->number",
+                    'name'=>$request->notify_name,
                     'phone_number'=>$request->number,
                     'profile_picture'=>"",
                     'user_id'=>$request->user_id

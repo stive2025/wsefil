@@ -12,7 +12,7 @@ class ChatController extends Controller
      */
     public function index()
     {
-        return Chat::paginate(7);
+        return Chat::orderBy('id','DESC')->paginate(7);
     }
 
     /**

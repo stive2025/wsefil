@@ -41,6 +41,7 @@ class ContactController extends Controller
                     "status"=>400,
                     "message"=>"Contacto ya existe."
                 ],400);
+                
             }
 
         }else{
