@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Chat;
+use App\Models\Connection;
 use App\Models\Contact;
 use App\Models\Message;
 use Illuminate\Http\Request;
@@ -25,11 +26,11 @@ class MessageController extends Controller
 
     public function push($data){
         try {
-        
+    
             $client = new Client("ws://127.0.0.1:8081");
             $client->send(json_encode($data));
             $client->close();
-            
+
         } catch (Exception $e) {
             return $e;
         }
@@ -49,7 +50,18 @@ class MessageController extends Controller
             'chat_id'=>$chat_id
         ];
 
-        $ws=$this->push($data);
+        $connection=Connection::where('id',1)->first();
+
+        if($connection->status=='DISCONNECTED'){
+            
+            return response()->json([
+                "status"=>400,
+                "message"=>"Whatsapp desconectado."
+            ],400);
+
+        }else{  
+            $ws=$this->push($data);
+        }
     }
 
     public function store(Request $request)
@@ -159,7 +171,6 @@ class MessageController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        
         
     }
 

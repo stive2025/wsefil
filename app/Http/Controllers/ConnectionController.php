@@ -18,6 +18,7 @@ class ConnectionController extends Controller
             "status"=>200,
             "data"=>$connections
         ],200);
+        
     }
     
     /**
