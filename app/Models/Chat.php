@@ -20,7 +20,7 @@ class Chat extends Model
     public function messages(){
         return $this->hasMany(Message::class)->chaperone();
     }
-
+    
     public function user(){
         return $this->belongsTo(User::class);
     }

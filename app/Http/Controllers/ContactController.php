@@ -18,6 +18,23 @@ class ContactController extends Controller
         ->paginate(7);
     }
 
+    public function indexChats(Request $request)
+    {
+        $contacts=Contact::when(request()->filled('name'),function($query){
+                $query->where('name','REGEXP',request('name'));
+            })
+            ->when(request()->filled('phone'),function($query){
+                $query->where('phone_number','REGEXP',request('phone'));
+            })
+            ->paginate(7);
+
+        foreach($contacts as $contact){
+            $contact->chats=$contact->find($contact->id)->chats;
+        }
+
+        return $contacts;
+    }
+
     /**
      * Store a newly created resource in storage.
      */

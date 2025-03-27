@@ -19,6 +19,7 @@ Route::get('/user', function (Request $request) {
 
 Route::post('/login',[LoginController::class,'login']);
 Route::get('/users',[UserController::class,'index']);
+Route::get('/users/chats',[UserController::class,'indexChats']);
 Route::get('/users/{id}',[UserController::class,'show']);
 Route::post('/users',[UserController::class,'store']);
 Route::patch('/users/{id}',[UserController::class,'update']);
@@ -51,6 +52,7 @@ Route::delete('/chats/{id}',[ChatController::class,'destroy']);
  */
 
 Route::get('/contacts',[ContactController::class,'index']);
+Route::get('/contacts/chats',[ContactController::class,'indexChats']);
 Route::get('/contacts/{id}',[ContactController::class,'show']);
 Route::post('/contacts',[ContactController::class,'store']);
 Route::patch('/contacts/{id}',[ContactController::class,'update']);

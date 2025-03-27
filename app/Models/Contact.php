@@ -24,6 +24,10 @@ class Contact extends Model
         return $this->hasMany(Message::class)->chaperone();
     }
 
+    public function chats(){
+        return $this->hasMany(Chat::class)->chaperone();
+    }
+
     public function user(){
         return $this->belongsTo(User::class);
     }

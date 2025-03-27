@@ -19,6 +19,20 @@ class UserController extends Controller
             ->paginate(7);
     }
 
+    public function indexChats(Request $request)
+    {
+        $users=User::when(request()->filled('name'),function($query){
+                $query->where('name','REGEXP',request('name'));
+            })
+            ->paginate(7);
+
+        foreach($users as $user){
+            $user->chats=$user->find($user->id)->chats;
+        }
+
+        return $users;
+    }
+
     /**
      * Store a newly created resource in storage.
      */

@@ -12,7 +12,11 @@ class ChatController extends Controller
      */
     public function index()
     {
-        return Chat::orderBy('id','DESC')->paginate(7);
+        return Chat::when(request()->filled('state'),function($query){
+                $query->where('state',request('state'));
+            })
+            ->orderBy('updated_at','DESC')
+            ->paginate(7);
     }
 
     /**
