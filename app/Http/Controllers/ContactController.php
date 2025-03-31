@@ -17,7 +17,7 @@ class ContactController extends Controller
         })
         ->paginate(7);
     }
-
+    
     public function indexChats(Request $request)
     {
         $contacts=Contact::when(request()->filled('name'),function($query){
@@ -25,6 +25,9 @@ class ContactController extends Controller
             })
             ->when(request()->filled('phone'),function($query){
                 $query->where('phone_number','REGEXP',request('phone'));
+            })
+            ->when(request()->filled('id'),function($query){
+                $query->where('id',request('id'));
             })
             ->paginate(7);
 

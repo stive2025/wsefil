@@ -74,7 +74,15 @@ class UserController extends Controller
      */
     public function update(Request $request, User $id)
     {
-        $id->update($request->all());
+
+        if(request()->filled('password')){
+            $id->update([
+                "password"=>Hash::make($request->password)
+            ]);
+        }else{
+            $id->update($request->all());
+        }
+
         return response()->json([
             "status"=>200,
             "message"=>"Usuario actualizado correctamente.",

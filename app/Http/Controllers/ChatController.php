@@ -18,7 +18,7 @@ class ChatController extends Controller
             ->orderBy('updated_at','DESC')
             ->paginate(7);
     }
-
+    
     /**
      * Store a newly created resource in storage.
     */
