@@ -150,9 +150,8 @@
     <table class="Ride__head">
         <tr>
             <td style="width:50%;">
-                <div class="Ride__logo">
-                    <img src="{{ 'data:image/png'. ';base64,' . base64_encode(file_get_contents('https://softsen.space/anyplace/public/logos/'.$logo)) }}">
-                </div>
+                
+            
                 <div class="Ride__datesPerson">
                     <h2>{{ $commercial_name }}</h2>
                     <div>
