@@ -44,6 +44,17 @@ class ChatController extends Controller
         return $chat;
     }
 
+    public function download(Chat $id)
+    {
+        $data=$id->find($id->id)->messages()
+            ->when(request()->filled('start_date'),function($query){
+                $query->where('state',request('end_date'));
+            })
+            ->get();
+
+        return $data;
+    }
+
     /**
      * Update the specified resource in storage.
      */
