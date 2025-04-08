@@ -13,8 +13,8 @@ class ContactController extends Controller
      */
     public function index()
     {
-        if (!Auth::check()) {
-            return response()->json(['error' => 'No autorizado'], 401);
+        if (!Auth::guard('api')->check()) {
+            return response()->json(['error' => 'Token inválido o no proporcionado'], 401);
         }
 
         return Contact::when(request()->filled('name'),function($query){
