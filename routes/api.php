@@ -41,7 +41,7 @@ Route::middleware('auth:sanctum')->delete('/messages/{id}',[MessageController::c
  * ================================> EndPoints para Chats
  */
 
-Route::get('/chats',[ChatController::class,'index']);
+Route::middleware('auth:sanctum')->get('/chats',[ChatController::class,'index']);
 Route::middleware('auth:sanctum')->get('/chats/{id}',[ChatController::class,'show']);
 Route::middleware('auth:sanctum')->post('/chats',[ChatController::class,'store']);
 Route::middleware('auth:sanctum')->patch('/chats/{id}',[ChatController::class,'update']);
@@ -58,7 +58,7 @@ Route::middleware('auth:sanctum')->post('/contacts',[ContactController::class,'s
 Route::middleware('auth:sanctum')->patch('/contacts/{id}',[ContactController::class,'update']);
 Route::middleware('auth:sanctum')->delete('/contacts/{id}',[ContactController::class,'destroy']);
 
-/**
+ /**
  * ================================> EndPoints para Conexiones de WhatsApp
  */
 
