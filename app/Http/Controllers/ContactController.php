@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Contact;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ContactController extends Controller
 {
@@ -12,10 +13,14 @@ class ContactController extends Controller
      */
     public function index()
     {
-        return Contact::when(request()->filled('name'),function($query){
-            $query->where('name','REGEXP',request('name'));
-        })
-        ->paginate(7);
+        if (!Auth::check()) {
+            return response()->json(['error' => 'No autorizado'], 401);
+        }else{
+            return Contact::when(request()->filled('name'),function($query){
+                $query->where('name','REGEXP',request('name'));
+            })
+            ->paginate(7);
+        }
     }
     
     public function indexChats(Request $request)

@@ -15,7 +15,7 @@ Route::get('/user', function (Request $request) {
 
 /**
  * ================================> EndPoints para Usuarios
- */
+*/
 
 Route::post('/login',[LoginController::class,'login']);
 Route::middleware('auth:sanctum')->get('/users',[UserController::class,'index']);
@@ -25,9 +25,9 @@ Route::middleware('auth:sanctum')->post('/users',[UserController::class,'store']
 Route::middleware('auth:sanctum')->patch('/users/{id}',[UserController::class,'update']);
 Route::middleware('auth:sanctum')->delete('/users/{id}',[UserController::class,'destroy']);
 
- /**
+/**
  * ================================> EndPoints para Mensajes
- */
+*/
 
 Route::middleware('auth:sanctum')->get('/messages',[MessageController::class,'index']);
 Route::middleware('auth:sanctum')->get('/messages/{id}',[MessageController::class,'show']);
