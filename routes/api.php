@@ -22,7 +22,7 @@ Route::middleware('auth:sanctum')->get('/users',[UserController::class,'index'])
 Route::middleware('auth:sanctum')->get('/users/chats',[UserController::class,'indexChats']);
 Route::middleware('auth:sanctum')->get('/users/{id}',[UserController::class,'show']);
 Route::middleware('auth:sanctum')->post('/users',[UserController::class,'store']);
-Route::middleware('auth:sanctum')->patch('/users/{id}',[UserController::class,'update']);
+Route::patch('/users/{id}',[UserController::class,'update']);
 Route::middleware('auth:sanctum')->delete('/users/{id}',[UserController::class,'destroy']);
 
 /**
@@ -33,7 +33,7 @@ Route::middleware('auth:sanctum')->get('/messages',[MessageController::class,'in
 Route::middleware('auth:sanctum')->get('/messages/{id}',[MessageController::class,'show']);
 Route::middleware('auth:sanctum')->post('/messages/connect',[MessageController::class,'connectmessage']);
 Route::middleware('auth:sanctum')->post('/messages/updateACK',[MessageController::class,'updateACK']);
-Route::middleware('auth:sanctum')->post('/messages',[MessageController::class,'store']);
+Route::post('/messages',[MessageController::class,'store']);
 Route::middleware('auth:sanctum')->patch('/messages/{id}',[MessageController::class,'update']);
 Route::middleware('auth:sanctum')->delete('/messages/{id}',[MessageController::class,'destroy']);
 

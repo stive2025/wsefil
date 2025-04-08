@@ -43,7 +43,7 @@ return [
         'api' => [
             'driver' => 'sanctum', // O 'sanctum' si usas Sanctum
             'provider' => 'users',  // Usualmente 'users', o el nombre de tu proveedor de usuarios
-        ],
+        ]
     ],
 
     /*

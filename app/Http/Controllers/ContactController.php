@@ -13,14 +13,14 @@ class ContactController extends Controller
      */
     public function index()
     {
-        if (!Auth::guard('api')->check()) {
-            return response()->json(['error' => 'Token inválido o no proporcionado'], 401);
+        if (Auth::guard('sanctum')->check()!=true) {
+            return ["text"=>"hola"];
         }
-
-        return Contact::when(request()->filled('name'),function($query){
-            $query->where('name','REGEXP',request('name'));
-        })
-        ->paginate(7);
+        
+        // return Contact::when(request()->filled('name'),function($query){
+        //     $query->where('name','REGEXP',request('name'));
+        // })
+        // ->paginate(7);
     }
     
     public function indexChats(Request $request)
