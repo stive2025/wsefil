@@ -51,7 +51,7 @@ Route::middleware('auth:sanctum')->delete('/chats/{id}',[ChatController::class,'
  * ================================> EndPoints para Contactos
  */
 
-Route::middleware('auth:api')->get('/contacts',[ContactController::class,'index']);
+Route::middleware('auth:sanctum')->get('/contacts',[ContactController::class,'index']);
 Route::middleware('auth:sanctum')->get('/contacts/chats',[ContactController::class,'indexChats']);
 Route::middleware('auth:sanctum')->get('/contacts/{id}',[ContactController::class,'show']);
 Route::middleware('auth:sanctum')->post('/contacts',[ContactController::class,'store']);
