@@ -66,7 +66,7 @@
 
     </style>
 
-    <img class="fondo" src="{{ 'data:image/png'. ';base64,' . base64_encode(file_get_contents('http://localhost/wsefil/public/bg_wp.png')) }}">
+    <img class="fondo" src="{{ 'data:image/png'. ';base64,' . base64_encode(file_get_contents('http://193.46.198.228:8085/back/public/bg_wp.png')) }}">
 
     <!-- 1) Encabezado del chat -->
     <table class="Ride__head">
