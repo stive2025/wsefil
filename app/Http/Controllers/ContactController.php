@@ -15,12 +15,12 @@ class ContactController extends Controller
     {
         if (!Auth::check()) {
             return response()->json(['error' => 'No autorizado'], 401);
-        }else{
-            return Contact::when(request()->filled('name'),function($query){
-                $query->where('name','REGEXP',request('name'));
-            })
-            ->paginate(7);
         }
+
+        return Contact::when(request()->filled('name'),function($query){
+            $query->where('name','REGEXP',request('name'));
+        })
+        ->paginate(7);
     }
     
     public function indexChats(Request $request)
