@@ -48,10 +48,13 @@ class ChatController extends Controller
     {
         $data=$id->find($id->id)->messages()
             ->when(request()->filled('start_date'),function($query){
-                $query->where('state',request('end_date'));
+                $query->where('created_at','>=',request('start_date'));
+            })
+            ->when(request()->filled('end_date'),function($query){
+                $query->where('created_at','<=',request('end_date'));
             })
             ->get();
-
+        
         return $data;
     }
 
