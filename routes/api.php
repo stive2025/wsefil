@@ -18,53 +18,53 @@ Route::get('/user', function (Request $request) {
  */
 
 Route::post('/login',[LoginController::class,'login']);
-Route::get('/users',[UserController::class,'index']);
-Route::get('/users/chats',[UserController::class,'indexChats']);
-Route::get('/users/{id}',[UserController::class,'show']);
-Route::post('/users',[UserController::class,'store']);
-Route::patch('/users/{id}',[UserController::class,'update']);
-Route::delete('/users/{id}',[UserController::class,'destroy']);
+Route::middleware('auth:sanctum')->get('/users',[UserController::class,'index']);
+Route::middleware('auth:sanctum')->get('/users/chats',[UserController::class,'indexChats']);
+Route::middleware('auth:sanctum')->get('/users/{id}',[UserController::class,'show']);
+Route::middleware('auth:sanctum')->post('/users',[UserController::class,'store']);
+Route::middleware('auth:sanctum')->patch('/users/{id}',[UserController::class,'update']);
+Route::middleware('auth:sanctum')->delete('/users/{id}',[UserController::class,'destroy']);
 
  /**
  * ================================> EndPoints para Mensajes
  */
 
-Route::get('/messages',[MessageController::class,'index']);
-Route::get('/messages/{id}',[MessageController::class,'show']);
-Route::post('/messages/connect',[MessageController::class,'connectmessage']);
-Route::post('/messages/updateACK',[MessageController::class,'updateACK']);
-Route::post('/messages',[MessageController::class,'store']);
-Route::patch('/messages/{id}',[MessageController::class,'update']);
-Route::delete('/messages/{id}',[MessageController::class,'destroy']);
+Route::middleware('auth:sanctum')->get('/messages',[MessageController::class,'index']);
+Route::middleware('auth:sanctum')->get('/messages/{id}',[MessageController::class,'show']);
+Route::middleware('auth:sanctum')->post('/messages/connect',[MessageController::class,'connectmessage']);
+Route::middleware('auth:sanctum')->post('/messages/updateACK',[MessageController::class,'updateACK']);
+Route::middleware('auth:sanctum')->post('/messages',[MessageController::class,'store']);
+Route::middleware('auth:sanctum')->patch('/messages/{id}',[MessageController::class,'update']);
+Route::middleware('auth:sanctum')->delete('/messages/{id}',[MessageController::class,'destroy']);
 
  /**
  * ================================> EndPoints para Chats
  */
 
-Route::get('/chats',[ChatController::class,'index']);
-Route::get('/chats/{id}',[ChatController::class,'show']);
-Route::post('/chats',[ChatController::class,'store']);
-Route::patch('/chats/{id}',[ChatController::class,'update']);
-Route::delete('/chats/{id}',[ChatController::class,'destroy']);
+Route::middleware('auth:sanctum')->get('/chats',[ChatController::class,'index']);
+Route::middleware('auth:sanctum')->get('/chats/{id}',[ChatController::class,'show']);
+Route::middleware('auth:sanctum')->post('/chats',[ChatController::class,'store']);
+Route::middleware('auth:sanctum')->patch('/chats/{id}',[ChatController::class,'update']);
+Route::middleware('auth:sanctum')->delete('/chats/{id}',[ChatController::class,'destroy']);
 
  /**
  * ================================> EndPoints para Contactos
  */
 
-Route::get('/contacts',[ContactController::class,'index']);
-Route::get('/contacts/chats',[ContactController::class,'indexChats']);
-Route::get('/contacts/{id}',[ContactController::class,'show']);
-Route::post('/contacts',[ContactController::class,'store']);
-Route::patch('/contacts/{id}',[ContactController::class,'update']);
-Route::delete('/contacts/{id}',[ContactController::class,'destroy']);
+Route::middleware('auth:sanctum')->get('/contacts',[ContactController::class,'index']);
+Route::middleware('auth:sanctum')->get('/contacts/chats',[ContactController::class,'indexChats']);
+Route::middleware('auth:sanctum')->get('/contacts/{id}',[ContactController::class,'show']);
+Route::middleware('auth:sanctum')->post('/contacts',[ContactController::class,'store']);
+Route::middleware('auth:sanctum')->patch('/contacts/{id}',[ContactController::class,'update']);
+Route::middleware('auth:sanctum')->delete('/contacts/{id}',[ContactController::class,'destroy']);
 
  /**
  * ================================> EndPoints para Conexiones de WhatsApp
  */
 
-Route::get('/connections',[ConnectionController::class,'index']);
-Route::get('/connections/{id}',[ConnectionController::class,'show']);
-Route::post('/connections',[ConnectionController::class,'store']);
-Route::put('/connections/{id}',[ConnectionController::class,'update']);
-Route::delete('/connections/{id}',[ConnectionController::class,'destroy']);
+Route::middleware('auth:sanctum')->get('/connections',[ConnectionController::class,'index']);
+Route::middleware('auth:sanctum')->get('/connections/{id}',[ConnectionController::class,'show']);
+Route::middleware('auth:sanctum')->post('/connections',[ConnectionController::class,'store']);
+Route::middleware('auth:sanctum')->put('/connections/{id}',[ConnectionController::class,'update']);
+Route::middleware('auth:sanctum')->delete('/connections/{id}',[ConnectionController::class,'destroy']);
  

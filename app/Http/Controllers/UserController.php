@@ -90,7 +90,7 @@ class UserController extends Controller
         ],200);
 
     }
-
+    
     /**
      * Remove the specified resource from storage.
      */
