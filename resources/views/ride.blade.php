@@ -225,7 +225,7 @@
             <th>IMPORTE</th>
         </tr>
         @foreach(json_decode($items) as $item)
-            <tr>
+            <!-- <tr>
                 <td style="text-align: left;word-wrap: break-word;width:5%;">{{ $item->cantidad }}</td>
                 <td style="text-align: left;word-wrap: break-word;width:10%;">{{ $item->codigo }}</td>
                 <td style="text-align: left;word-wrap: break-word;width:25%;">{{ $item->nombre }}</td>
@@ -233,7 +233,7 @@
                 <td style="text-align: left;word-wrap: break-word;width:8.33%;">{{ $item->precio_unitario }}</td>
                 <td style="text-align: left;word-wrap: break-word;width:8.33%;">{{ $item->descuento }}</td>
                 <td style="text-align: left;word-wrap: break-word;width:8.33%;">{{ $item->importe }}</td>
-            </tr>
+            </tr> -->
         @endforeach
     </table>
 
