@@ -41,7 +41,7 @@ return [
             'provider' => 'users',
         ],
         'api' => [
-            'driver' => 'passport', // O 'sanctum' si usas Sanctum
+            'driver' => 'sanctum', // O 'sanctum' si usas Sanctum
             'provider' => 'users',  // Usualmente 'users', o el nombre de tu proveedor de usuarios
         ],
     ],
