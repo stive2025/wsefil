@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Chat;
+use App\Models\Contact;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 
@@ -47,24 +48,36 @@ class ChatController extends Controller
 
     public function download(Chat $id)
     {
+
+        $data=$id->find($id->id)->messages()
+            ->when(request()->filled('start_date'),function($query){
+                $query->where('created_at','>=',request('start_date'));
+            })
+            ->when(request()->filled('end_date'),function($query){
+                $query->where('created_at','<=',request('end_date'));
+            })
+            ->when(request()->filled('body'),function($query){
+                $query->where('body','REGEXP',request('body'));
+            })
+            ->get();
+
         if(request('download')==false){
-            $data=$id->find($id->id)->messages()
-                ->when(request()->filled('start_date'),function($query){
-                    $query->where('created_at','>=',request('start_date'));
-                })
-                ->when(request()->filled('end_date'),function($query){
-                    $query->where('created_at','<=',request('end_date'));
-                })
-                ->when(request()->filled('body'),function($query){
-                    $query->where('body','REGEXP',request('body'));
-                })
-                ->get();
             
             return $data;
 
         }else{
 
+            $items=[];
 
+            $data=[
+                "client_name"=>Contact::where('id',$id->contact_id)->first()->name,
+                "client_phone"=>Contact::where('id',$id->contact_id)->first()->phone_number,
+                "items"=>json_encode($items)
+            ];
+            
+            $invoice=Pdf::loadView('ride',$data);
+            
+            return base64_encode($invoice->download('prueba.pdf'));
 
         }
     }
@@ -253,36 +266,9 @@ class ChatController extends Controller
             )
         ];
 
-        $pay_way=[
-            [
-                'way'=>'SIN UTILIZACION DEL SISTEMA FINANCIERO',
-                'value'=>10.00,
-                'amount'=>30,
-                'way_time'=>'DIAS'
-            ],
-            [
-                'way'=>'CON UTILIZACION DEL SISTEMA FINANCIERO',
-                'value'=>7.25,
-                'amount'=>30,
-                'way_time'=>'DIAS'
-            ]
-        ];
-
-        $adicional=[
-            [
-                'field'=>'nota',
-                'value'=>'P/R CONSUMO EN ESTABLECIMIENTO'
-            ],
-            [
-                'field'=>'pago',
-                'value'=>'7.25 CON CODIGO AHORITA 74469698'
-            ]
-        ];
-
         $data=[
-            'items'=>json_encode($items),
-            'commercial_name'=>'INTELIVE',
-            'name'=>'CESEN PACCHA STEVEN RAFAEL',
+            'client_name'=>"STEVEN RAFAEL CESEN PACCHA",
+            'client_phone'=>'+593978950498',
             'identification'=>'1150575338001',
             'email'=>'steven.r.cesen@hotmail.com',
             'access_key'=>'1602202501115057533800110010010000001551224567811',
@@ -302,9 +288,7 @@ class ChatController extends Controller
             'ice'=>0,
             'dscto'=>0,
             'total'=>17.25,
-            'propina'=>0,
-            'pay_ways'=>json_encode($pay_way),
-            'adicional'=>json_encode($adicional)
+            'propina'=>0
         ];
 
         $invoice=Pdf::loadView('ride',$data);
