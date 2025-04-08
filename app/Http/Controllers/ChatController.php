@@ -53,6 +53,9 @@ class ChatController extends Controller
             ->when(request()->filled('end_date'),function($query){
                 $query->where('created_at','<=',request('end_date'));
             })
+            ->when(request()->filled('body'),function($query){
+                $query->where('body','REGEXP',request('body'));
+            })
             ->get();
         
         return $data;
