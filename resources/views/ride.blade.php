@@ -86,22 +86,23 @@
     </table>
 
     <!-- 2) mensajes -->
-    
     <table class="Chats__items">
         @foreach (json_decode($items) as $item)
             <tr class="Chat__item">
                 @if ($item->from_me)
-                    <td style="background-color: #D9FDD3;text-align:right;">
+                    <td style="background-color: #D9FDD3;text-align:right; width:200px;">
+                        <label>{{ $item->text }}</label>
+                        <label>{{ $item->timestamp }}</label>
+                    </td>
+                @else
+                    <td style="background-color: white;text-align:left;width:200px;">
                         <label>{{ $item->text }}</label>
                         <label>{{ $item->timestamp }}</label>
                     </td>
                 @endif
-                    <td style="background-color: white;text-align:left;">
-                        <label>{{ $item->text }}</label>
-                        <label>{{ $item->timestamp }}</label>
-                    </td>
             </tr>
         @endforeach
     </table>
+    
 </body>
 </html>
