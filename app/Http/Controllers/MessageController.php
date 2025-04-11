@@ -102,7 +102,7 @@ class MessageController extends Controller
                 }else{
 
                     $create_chat=Chat::create([
-                        'state'=>'OPEN',
+                        'state'=>'PENDING',
                         'last_message'=>$request->body,
                         'unread_message'=>1,
                         'contact_id'=>$contact_id,
@@ -120,11 +120,11 @@ class MessageController extends Controller
                     'profile_picture'=>"",
                     'user_id'=>$request->user_id
                 ]);
-
+                
                 $contact_id=$create_contact->id;
 
                 $create_chat=Chat::create([
-                    'state'=>'OPEN',
+                    'state'=>'PENDING',
                     'last_message'=>$request->body,
                     'unread_message'=>1,
                     'contact_id'=>$contact_id,
