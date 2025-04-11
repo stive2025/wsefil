@@ -17,6 +17,12 @@ class ChatController extends Controller
         return Chat::when(request()->filled('state'),function($query){
                 $query->where('state',request('state'));
             })
+            ->when(request()->filled('user_id'),function($query){
+                $query->where('user_id',request('user_id'));
+            })
+            ->when(request()->filled('state'),function($query){
+                $query->where('state',request('state'));
+            })
             ->orderBy('updated_at','DESC')
             ->paginate(7);
     }
@@ -85,190 +91,30 @@ class ChatController extends Controller
     public function generateRIDE(){
         $items=[
             array(
-                'codigo'=>'ITEM_1',
-                'name'=>'PRODUCTO 1',
-                'info'=>'',
-                'quantity'=>1,
-                'subtotal'=>10.00,
-                'iva'=>'IVA 15',
-                'dscto'=>0.00,
-                'importe'=>10.00,
+                'from_me'=>true,
+                'text'=>'Hola como estás?',
+                'timestamp'=>'11:00'
             ),
             array(
-                'codigo'=>'ITEM_2',
-                'name'=>'PRODUCTO 2',
-                'quantity'=>1,
-                'subtotal'=>5.00,
-                'iva'=>'IVA 15',
-                'info'=>'',
-                'dscto'=>0.00,
-                'importe'=>5.00,
+                'from_me'=>true,
+                'text'=>'Vas a ir a la U?',
+                'timestamp'=>'11:01'
             ),
             array(
-                'codigo'=>'ITEM_1',
-                'name'=>'PRODUCTO 1',
-                'info'=>'',
-                'quantity'=>1,
-                'subtotal'=>10.00,
-                'iva'=>'IVA 15',
-                'dscto'=>0.00,
-                'importe'=>10.00,
+                'from_me'=>false,
+                'text'=>'Todo bien y tú',
+                'timestamp'=>'11:05'
             ),
             array(
-                'codigo'=>'ITEM_2',
-                'name'=>'PRODUCTO 2',
-                'quantity'=>1,
-                'subtotal'=>5.00,
-                'iva'=>'IVA 15',
-                'info'=>'',
-                'dscto'=>0.00,
-                'importe'=>5.00,
-            ),
-            array(
-                'codigo'=>'ITEM_1',
-                'name'=>'PRODUCTO 1',
-                'info'=>'',
-                'quantity'=>1,
-                'subtotal'=>10.00,
-                'iva'=>'IVA 15',
-                'dscto'=>0.00,
-                'importe'=>10.00,
-            ),
-            array(
-                'codigo'=>'ITEM_2',
-                'name'=>'PRODUCTO 2',
-                'quantity'=>1,
-                'subtotal'=>5.00,
-                'iva'=>'IVA 15',
-                'info'=>'',
-                'dscto'=>0.00,
-                'importe'=>5.00,
-            ),
-            array(
-                'codigo'=>'ITEM_1',
-                'name'=>'PRODUCTO 1',
-                'info'=>'',
-                'quantity'=>1,
-                'subtotal'=>10.00,
-                'iva'=>'IVA 15',
-                'dscto'=>0.00,
-                'importe'=>10.00,
-            ),
-            array(
-                'codigo'=>'ITEM_2',
-                'name'=>'PRODUCTO 2',
-                'quantity'=>1,
-                'subtotal'=>5.00,
-                'iva'=>'IVA 15',
-                'info'=>'',
-                'dscto'=>0.00,
-                'importe'=>5.00,
-            ),
-            array(
-                'codigo'=>'ITEM_1',
-                'name'=>'PRODUCTO 1',
-                'info'=>'',
-                'quantity'=>1,
-                'subtotal'=>10.00,
-                'iva'=>'IVA 15',
-                'dscto'=>0.00,
-                'importe'=>10.00,
-            ),
-            array(
-                'codigo'=>'ITEM_2',
-                'name'=>'PRODUCTO 2',
-                'quantity'=>1,
-                'subtotal'=>5.00,
-                'iva'=>'IVA 15',
-                'info'=>'',
-                'dscto'=>0.00,
-                'importe'=>5.00,
-            ),
-            array(
-                'codigo'=>'ITEM_1',
-                'name'=>'PRODUCTO 1',
-                'info'=>'',
-                'quantity'=>1,
-                'subtotal'=>10.00,
-                'iva'=>'IVA 15',
-                'dscto'=>0.00,
-                'importe'=>10.00,
-            ),
-            array(
-                'codigo'=>'ITEM_2',
-                'name'=>'PRODUCTO 2',
-                'quantity'=>1,
-                'subtotal'=>5.00,
-                'iva'=>'IVA 15',
-                'info'=>'',
-                'dscto'=>0.00,
-                'importe'=>5.00,
-            ),
-            array(
-                'codigo'=>'ITEM_1',
-                'name'=>'PRODUCTO 1 CON CABLE USB Y MONTAJE',
-                'info'=>'',
-                'quantity'=>1,
-                'subtotal'=>10.00,
-                'iva'=>'IVA 15',
-                'dscto'=>0.00,
-                'importe'=>10.00,
-            ),
-            array(
-                'codigo'=>'ITEM_2',
-                'name'=>'PLACA DE DESARROLLO ESP32 CAM WIFI Y BLUETOOTH CAMARA OV2640',
-                'quantity'=>1,
-                'subtotal'=>5.00,
-                'iva'=>'IVA 15',
-                'info'=>'',
-                'dscto'=>0.00,
-                'importe'=>5.00,
-            ),
-            array(
-                'codigo'=>'ITEM_1',
-                'name'=>'PRODUCTO 1',
-                'info'=>'',
-                'quantity'=>1,
-                'subtotal'=>10.00,
-                'iva'=>'IVA 15',
-                'dscto'=>0.00,
-                'importe'=>10.00,
-            ),
-            array(
-                'codigo'=>'ITEM_2',
-                'name'=>'PRODUCTO 2',
-                'quantity'=>1,
-                'subtotal'=>5.00,
-                'iva'=>'IVA 15',
-                'info'=>'',
-                'dscto'=>0.00,
-                'importe'=>5.00,
-            ),
-            array(
-                'codigo'=>'ITEM_1',
-                'name'=>'PRODUCTO 1',
-                'info'=>'',
-                'quantity'=>1,
-                'subtotal'=>10.00,
-                'iva'=>'IVA 15',
-                'dscto'=>0.00,
-                'importe'=>10.00,
-            ),
-            array(
-                'codigo'=>'ITEM_2',
-                'nombre'=>'PRODUCTO 2',
-                'cantidad'=>1,
-                'subtotal'=>5.00,
-                'iva'=>'IVA 15',
-                'info'=>'',
-                'dscto'=>0.00,
-                'importe'=>5.00,
+                'from_me'=>true,
+                'text'=>'No creo que vaya',
+                'timestamp'=>'11:05'
             )
         ];
 
         $data=[
             'client_name'=>"STEVEN RAFAEL CESEN PACCHA",
-            'client_phone'=>'+593978950498',
+            'client_phone'=>'593978950498',
             'identification'=>'1150575338001',
             'email'=>'steven.r.cesen@hotmail.com',
             'access_key'=>'1602202501115057533800110010010000001551224567811',
@@ -288,7 +134,8 @@ class ChatController extends Controller
             'ice'=>0,
             'dscto'=>0,
             'total'=>17.25,
-            'propina'=>0
+            'propina'=>0,
+            'items'=>json_encode($items)
         ];
 
         $invoice=Pdf::loadView('ride',$data);
