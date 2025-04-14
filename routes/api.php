@@ -47,7 +47,7 @@ Route::get('chats/ride',[ChatController::class,'generateRIDE']);
 Route::middleware('auth:sanctum')->get('/chats/{id}',[ChatController::class,'show']);
 Route::middleware('auth:sanctum')->post('/chats',[ChatController::class,'store']);
 Route::middleware('auth:sanctum')->patch('/chats/{id}',[ChatController::class,'update']);
-Route::middleware('auth:sanctum')->put('/chats/transfer/{id}',[ChatController::class,'update']);
+Route::middleware('auth:sanctum')->put('/chats/transfer/{id}',[ChatController::class,'transfer']);
 Route::middleware('auth:sanctum')->delete('/chats/{id}',[ChatController::class,'destroy']);
 
  /**
