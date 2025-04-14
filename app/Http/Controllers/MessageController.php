@@ -78,11 +78,10 @@ class MessageController extends Controller
 
             Chat::where('id',$request->chat_id)->update([
                 'last_message'=>$request->body,
-                'unread_message'=>($request->from_me==false) ? Chat::where('id',$request->chat_id)->first()->unread_message+1 : 0,
-                'user_id'=>Auth::user()->id
+                'unread_message'=>($request->from_me==false) ? Chat::where('id',$request->chat_id)->first()->unread_message+1 : 0
             ]);
 
-            $user_id=Auth::user()->id;
+            $user_id=Chat::where('id',$request->chat_id)->first()->user_id;
             
         }else{
 
