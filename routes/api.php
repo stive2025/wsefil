@@ -42,8 +42,8 @@ Route::middleware('auth:sanctum')->delete('/messages/{id}',[MessageController::c
  */
 
 Route::middleware('auth:sanctum')->get('/chats',[ChatController::class,'index']);
-Route::middleware('auth:sanctum')->post('/chats/search/{id}',[ChatController::class,'download']);
-Route::get('chats/ride',[ChatController::class,'generateRIDE']);
+Route::middleware('auth:sanctum')->post('/chats/search/{id}',[ChatController::class,'search']);
+Route::get('chats/download',[ChatController::class,'download']);
 Route::middleware('auth:sanctum')->get('/chats/{id}',[ChatController::class,'show']);
 Route::middleware('auth:sanctum')->post('/chats',[ChatController::class,'store']);
 Route::middleware('auth:sanctum')->patch('/chats/{id}',[ChatController::class,'update']);

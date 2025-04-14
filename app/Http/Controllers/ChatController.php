@@ -55,7 +55,7 @@ class ChatController extends Controller
         return $chat;
     }
 
-    public function download(Chat $id)
+    public function search(Chat $id)
     {
         $data=$id->find($id->id)->messages()
             ->when(request()->filled('start_date'),function($query){
@@ -69,80 +69,24 @@ class ChatController extends Controller
             })
             ->get();
 
-        if(request('download')==false){
-            
-            return $data;
 
-        }else{
-
-            $items=[];
-
-            $data=[
-                "client_name"=>Contact::where('id',$id->contact_id)->first()->name,
-                "client_phone"=>Contact::where('id',$id->contact_id)->first()->phone_number,
-                "items"=>json_encode($items)
-            ];
-            
-            $invoice=Pdf::loadView('ride',$data);
-            
-            return base64_encode($invoice->download('prueba.pdf'));
-
-        }
+        return $data;
     }
 
-    public function generateRIDE(){
-        $items=[
-            array(
-                'from_me'=>true,
-                'text'=>'Hola como estás?',
-                'timestamp'=>'11:00'
-            ),
-            array(
-                'from_me'=>true,
-                'text'=>'Vas a ir a la U?',
-                'timestamp'=>'11:01'
-            ),
-            array(
-                'from_me'=>false,
-                'text'=>'Todo bien y tú',
-                'timestamp'=>'11:05'
-            ),
-            array(
-                'from_me'=>true,
-                'text'=>'No creo que vaya',
-                'timestamp'=>'11:05'
-            )
-        ];
+    public function download(Request $request,Chat $id){
+        $items=[];
+
+        
 
         $data=[
-            'client_name'=>"STEVEN RAFAEL CESEN PACCHA",
-            'client_phone'=>'593978950498',
-            'identification'=>'1150575338001',
-            'email'=>'steven.r.cesen@hotmail.com',
-            'access_key'=>'1602202501115057533800110010010000001551224567811',
-            'sequential'=>'001-001-000000155',
-            'direction'=>'AV. MANUEL AGUSTIN AGUIRRE Y MAXIMILIANO RODRIGUEZ',
-            'date'=>'2025-01-27T10:32:01',
-            'phone'=>'0978950498',
-            'regimen'=>'GENERAL',
-            'oc'=>false,
-            'client_name'=>'CALDERON ORDOÑEZ MARIA ANTONIETA',
-            'client_ci'=>'1100660032',
-            'client_email'=>'wilson@gmail.com',
-            'client_direction'=>'AV. DE LAS AMERICAS',
-            'subtotal'=>15.00,
-            'iva15'=>2.25,
-            'iva5'=>0,
-            'ice'=>0,
-            'dscto'=>0,
-            'total'=>17.25,
-            'propina'=>0,
-            'items'=>json_encode($items)
+            "client_name"=>Contact::where('id',$id->contact_id)->first()->name,
+            "client_phone"=>Contact::where('id',$id->contact_id)->first()->phone_number,
+            "items"=>json_encode($items)
         ];
 
         $invoice=Pdf::loadView('ride',$data);
         
-        return $invoice->download('prueba.pdf');
+        return $invoice->download(Contact::where('id',$id->contact_id)->first()->name.'_'.Contact::where('id',$id->contact_id)->first()->phone_number.'.pdf');
     }
 
     /**
