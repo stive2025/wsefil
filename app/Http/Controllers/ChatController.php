@@ -183,11 +183,12 @@ class ChatController extends Controller
             $last_message=$request->body;
         }
 
-        $id->update([
-            "last_message"=>$request->body,
-            'unread_message'=>intval($id->unread_message)+1,
-            "user_id"=>$request->to
-        ]);
+        Chat::where('id',$id->id)
+            ->update([
+                "last_message"=>$request->body,
+                'unread_message'=>intval($id->unread_message)+1,
+                "user_id"=>$request->to
+            ]);
 
         return response()->json([
             "status"=>200,
