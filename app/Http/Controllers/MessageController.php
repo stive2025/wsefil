@@ -6,6 +6,7 @@ use App\Models\Chat;
 use App\Models\Connection;
 use App\Models\Contact;
 use App\Models\Message;
+use App\Models\User;
 use Illuminate\Http\Request;
 use WebSocket\Client;
 use Exception;
@@ -69,6 +70,7 @@ class MessageController extends Controller
     {
         //  Creamos el mensaje
         $chat_id=0;
+        $user_id=null;
 
         if(isset($request->chat_id)){ //El chat existe
             
@@ -79,6 +81,8 @@ class MessageController extends Controller
                 'unread_message'=>($request->from_me==false) ? Chat::where('id',$request->chat_id)->first()->unread_message+1 : 0,
                 'user_id'=>Auth::user()->id
             ]);
+
+            $user_id=Auth::user()->id;
             
         }else{
 
@@ -100,6 +104,8 @@ class MessageController extends Controller
                         'unread_message'=>Chat::where('id',$chat_id)->first()->unread_message+1
                     ]);
 
+                    $user_id=$prev_chat->user_id;
+
                 }else{
 
                     $create_chat=Chat::create([
@@ -107,10 +113,11 @@ class MessageController extends Controller
                         'last_message'=>$request->body,
                         'unread_message'=>1,
                         'contact_id'=>$contact_id,
-                        'user_id'=>""
+                        'user_id'=>User::where('role',3)->first()->id
                     ]);
-        
+
                     $chat_id=$create_chat->id;
+                    $user_id=User::where('role',3)->first()->id;
 
                 }
 
@@ -119,7 +126,7 @@ class MessageController extends Controller
                     'name'=>$request->notify_name,
                     'phone_number'=>$request->number,
                     'profile_picture'=>"",
-                    'user_id'=>""
+                    'user_id'=>User::where('role',3)->first()->id
                 ]);
                 
                 $contact_id=$create_contact->id;
@@ -129,10 +136,11 @@ class MessageController extends Controller
                     'last_message'=>$request->body,
                     'unread_message'=>1,
                     'contact_id'=>$contact_id,
-                    'user_id'=>""
+                    'user_id'=>User::where('role',3)->first()->id
                 ]);
     
                 $chat_id=$create_chat->id;
+                $user_id=User::where('role',3)->first()->id;
             }
         }
 
@@ -147,7 +155,7 @@ class MessageController extends Controller
             'timestamp_wp'=>$request->timestamp,
             'is_private'=>$request->is_private,
             'state'=>"G_TEST",
-            'created_by'=>"",
+            'created_by'=>$user_id,
             'chat_id'=>$chat_id
         ];
 
@@ -155,7 +163,8 @@ class MessageController extends Controller
 
         return response()->json([
             "status"=>200,
-            "message"=>"Mensaje creado correctamente."
+            "message"=>"Mensaje creado correctamente.",
+            "user_id"=>$user_id
         ],200);
     }
 
