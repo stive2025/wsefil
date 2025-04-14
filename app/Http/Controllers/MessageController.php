@@ -9,6 +9,7 @@ use App\Models\Message;
 use Illuminate\Http\Request;
 use WebSocket\Client;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
 {
@@ -76,6 +77,7 @@ class MessageController extends Controller
             Chat::where('id',$request->chat_id)->update([
                 'last_message'=>$request->body,
                 'unread_message'=>($request->from_me==false) ? Chat::where('id',$request->chat_id)->first()->unread_message+1 : 0,
+                'user_id'=>Auth::user()->id
             ]);
             
         }else{
@@ -96,16 +98,17 @@ class MessageController extends Controller
                     Chat::where('id',$chat_id)->update([
                         'last_message'=>$request->body,
                         'unread_message'=>Chat::where('id',$chat_id)->first()->unread_message+1,
+                        'user_id'=>Auth::user()->id
                     ]);
 
                 }else{
 
                     $create_chat=Chat::create([
-                        'state'=>'PENDING E',
+                        'state'=>'PENDING',
                         'last_message'=>$request->body,
                         'unread_message'=>1,
                         'contact_id'=>$contact_id,
-                        'user_id'=>$request->user_id
+                        'user_id'=>Auth::user()->id
                     ]);
         
                     $chat_id=$create_chat->id;
@@ -117,17 +120,17 @@ class MessageController extends Controller
                     'name'=>$request->notify_name,
                     'phone_number'=>$request->number,
                     'profile_picture'=>"",
-                    'user_id'=>$request->user_id
+                    'user_id'=>Auth::user()->id
                 ]);
                 
                 $contact_id=$create_contact->id;
 
                 $create_chat=Chat::create([
-                    'state'=>'PENDING C',
+                    'state'=>'PENDING',
                     'last_message'=>$request->body,
                     'unread_message'=>1,
                     'contact_id'=>$contact_id,
-                    'user_id'=>$request->user_id
+                    'user_id'=>Auth::user()->id
                 ]);
     
                 $chat_id=$create_chat->id;
@@ -145,7 +148,7 @@ class MessageController extends Controller
             'timestamp_wp'=>$request->timestamp,
             'is_private'=>$request->is_private,
             'state'=>"G_TEST",
-            'created_by'=>$request->user_id,
+            'created_by'=>Auth::user()->id,
             'chat_id'=>$chat_id
         ];
 
