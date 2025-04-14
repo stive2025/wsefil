@@ -97,8 +97,7 @@ class MessageController extends Controller
 
                     Chat::where('id',$chat_id)->update([
                         'last_message'=>$request->body,
-                        'unread_message'=>Chat::where('id',$chat_id)->first()->unread_message+1,
-                        'user_id'=>Auth::user()->id
+                        'unread_message'=>Chat::where('id',$chat_id)->first()->unread_message+1
                     ]);
 
                 }else{
@@ -108,7 +107,7 @@ class MessageController extends Controller
                         'last_message'=>$request->body,
                         'unread_message'=>1,
                         'contact_id'=>$contact_id,
-                        'user_id'=>Auth::user()->id
+                        'user_id'=>""
                     ]);
         
                     $chat_id=$create_chat->id;
@@ -120,7 +119,7 @@ class MessageController extends Controller
                     'name'=>$request->notify_name,
                     'phone_number'=>$request->number,
                     'profile_picture'=>"",
-                    'user_id'=>Auth::user()->id
+                    'user_id'=>""
                 ]);
                 
                 $contact_id=$create_contact->id;
@@ -130,7 +129,7 @@ class MessageController extends Controller
                     'last_message'=>$request->body,
                     'unread_message'=>1,
                     'contact_id'=>$contact_id,
-                    'user_id'=>Auth::user()->id
+                    'user_id'=>""
                 ]);
     
                 $chat_id=$create_chat->id;
@@ -148,7 +147,7 @@ class MessageController extends Controller
             'timestamp_wp'=>$request->timestamp,
             'is_private'=>$request->is_private,
             'state'=>"G_TEST",
-            'created_by'=>Auth::user()->id,
+            'created_by'=>"",
             'chat_id'=>$chat_id
         ];
 
