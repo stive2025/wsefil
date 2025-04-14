@@ -76,7 +76,25 @@ class ChatController extends Controller
     public function download(Request $request,Chat $id){
         $items=[];
 
+        $messages=$id->find($id->id)->messages()
+            ->when(request()->filled('start_date'),function($query){
+                $query->where('created_at','>=',request('start_date'));
+            })
+            ->when(request()->filled('end_date'),function($query){
+                $query->where('created_at','<=',request('end_date'));
+            })
+            ->when(request()->filled('body'),function($query){
+                $query->where('body','REGEXP',request('body'));
+            })
+            ->get();
         
+        foreach($messages as $message){
+            array_push($items,[
+                "text"=>$message->body,
+                "timestamp"=>$message->timestamp_wp,
+                "from_me"=>$message->from_me
+            ]);
+        }
 
         $data=[
             "client_name"=>Contact::where('id',$id->contact_id)->first()->name,
