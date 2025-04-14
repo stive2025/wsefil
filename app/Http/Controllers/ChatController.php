@@ -85,9 +85,10 @@ class ChatController extends Controller
         ];
 
         $invoice=Pdf::loadView('ride',$data);
+        $name=$data['client_name'];
 
         //$filename=Contact::where('id',$id->contact_id)->first()->name.'_'.Contact::where('id',$id->contact_id)->first()->phone_number.'.pdf';
-        $filename="Chat_".$data['client_name'].".pdf";
+        $filename="Chat_$name.pdf";
         return $invoice->download($filename);
     }
 
