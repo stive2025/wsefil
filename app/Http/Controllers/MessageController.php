@@ -87,9 +87,8 @@ class MessageController extends Controller
             if($contact!=null){
 
                 $contact_id=$contact->id;
-                //  Busco un chat ABIERTO con este contact_id
                 $prev_chat=Chat::where('contact_id',$contact_id)->whereIn('state',['OPEN','PENDING'])->first();
-                
+
                 if($prev_chat!=null){
                     
                     $chat_id=$prev_chat->id;
@@ -102,7 +101,7 @@ class MessageController extends Controller
                 }else{
 
                     $create_chat=Chat::create([
-                        'state'=>'PENDING',
+                        'state'=>'PENDING E',
                         'last_message'=>$request->body,
                         'unread_message'=>1,
                         'contact_id'=>$contact_id,
@@ -124,7 +123,7 @@ class MessageController extends Controller
                 $contact_id=$create_contact->id;
 
                 $create_chat=Chat::create([
-                    'state'=>'PENDING',
+                    'state'=>'PENDING C',
                     'last_message'=>$request->body,
                     'unread_message'=>1,
                     'contact_id'=>$contact_id,
