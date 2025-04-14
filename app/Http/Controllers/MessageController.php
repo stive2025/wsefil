@@ -88,8 +88,8 @@ class MessageController extends Controller
 
                 $contact_id=$contact->id;
                 //  Busco un chat ABIERTO con este contact_id
-                $prev_chat=Chat::where('contact_id',$contact_id)->where('state','OPEN')->first();
-
+                $prev_chat=Chat::where('contact_id',$contact_id)->whereIn('state',['OPEN','PENDING'])->first();
+                
                 if($prev_chat!=null){
                     
                     $chat_id=$prev_chat->id;
