@@ -25,6 +25,7 @@ class ChatController extends Controller
             ->when(request()->filled('state'),function($query){
                 $query->where('state',request('state'));
             })
+            ->where('user_id',Auth::user()->id)
             ->orderBy('updated_at','DESC')
             ->paginate(7);
     }
