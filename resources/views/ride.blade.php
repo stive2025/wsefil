@@ -92,12 +92,12 @@
                 @if ($item->from_me)
                     <td style="background-color: #D9FDD3;text-align:right; width:200px;">
                         <label>{{ $item->text }}</label>
-                        <label>{{ $item->timestamp }}</label>
+                        <label>{{ date('H:i:s',$item->timestamp) }}</label>
                     </td>
                 @else
                     <td style="background-color: white;text-align:left;width:200px;">
                         <label>{{ $item->text }}</label>
-                        <label>{{ $item->timestamp }}</label>
+                        <label>{{ date('H:i:s',$item->timestamp) }}</label>
                     </td>
                 @endif
             </tr>
