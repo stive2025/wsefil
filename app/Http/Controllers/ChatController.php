@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Chat;
 use App\Models\Contact;
+use App\Models\Message;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ChatController extends Controller
 {
@@ -54,7 +56,6 @@ class ChatController extends Controller
 
     public function download(Chat $id)
     {
-
         $data=$id->find($id->id)->messages()
             ->when(request()->filled('start_date'),function($query){
                 $query->where('created_at','>=',request('start_date'));
@@ -154,6 +155,43 @@ class ChatController extends Controller
             "status"=>200,
             "message"=>"Chat actualizado correctamente.",
             "data"=>$id
+        ],200);
+    }
+
+    public function transfer(Request $request, Chat $id)
+    {
+        //  Revisamos si hay mensaje privado
+        $last_message="";
+
+        if(request()->filled('is_private')){
+            $data=[
+                'id_message_wp'=>"",
+                'body'=>$request->body,
+                'ack'=>1,
+                'from_me'=>false,
+                'to'=>"",
+                'media_type'=>"chat",
+                'media_path'=>"",
+                'timestamp_wp'=>time()-18000,
+                'is_private'=>true,
+                'state'=>"G_TEST",
+                'created_by'=>Auth::user()->id,
+                'chat_id'=>$id->id
+            ];
+
+            $create_message=Message::create($data);
+            $last_message=$request->body;
+        }
+
+        $id->update([
+            "last_message"=>$request->body,
+            'unread_message'=>intval($id->unread_message)+1,
+            "user_id"=>$request->to
+        ]);
+
+        return response()->json([
+            "status"=>200,
+            "message"=>"Chat transferido."
         ],200);
     }
 

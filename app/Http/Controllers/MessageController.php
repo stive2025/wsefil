@@ -178,42 +178,6 @@ class MessageController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Chat $id)
-    {
-        //  Revisamos si hay mensaje privado
-        $last_message="";
-
-        if(request()->filled('is_private')){
-            $data=[
-                'id_message_wp'=>"",
-                'body'=>$request->body,
-                'ack'=>1,
-                'from_me'=>false,
-                'to'=>"",
-                'media_type'=>"chat",
-                'media_path'=>"",
-                'timestamp_wp'=>time()-18000,
-                'is_private'=>true,
-                'state'=>"G_TEST",
-                'created_by'=>Auth::user()->id,
-                'chat_id'=>$id->id
-            ];
-    
-            $create_message=Message::create($data);
-            $last_message=$request->body;
-        }
-
-        $id->update([
-            "last_message"=>$request->body,
-            'unread_message'=>intval($id->unread_message)+1,
-            "user_id"=>$request->to
-        ]);
-
-        return response()->json([
-            "status"=>200,
-            "message"=>"Chat transferido."
-        ],200);
-    }
 
     public function updateACK(Request $request)
     {
