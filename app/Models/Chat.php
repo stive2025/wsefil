@@ -14,7 +14,8 @@ class Chat extends Model
         'last_message',
         'unread_message',
         'contact_id',
-        'user_id'
+        'user_id',
+        'tag_id'
     ];
     
     public function messages(){

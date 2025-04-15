@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('connections', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('qr_code');
+            $table->string('qr_code')->nullable();
             $table->string('status');
-            $table->string('name');
-            $table->integer('is_default');
-            $table->text('greeting_message');
-            $table->string('farewell_message');
-            $table->string('number');
+            $table->string('name')->nullable();
+            $table->integer('is_default')->nullable();
+            $table->text('greeting_message')->nullable();
+            $table->string('farewell_message')->nullable();
+            $table->string('number')->nullable();
         });
     }
 

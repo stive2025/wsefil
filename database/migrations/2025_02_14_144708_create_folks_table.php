@@ -18,16 +18,11 @@ return new class extends Migration
             $table->foreignId('contact_id');
             $table->foreign('contact_id')
                 ->references('id')
-                ->on('contacts')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
+                ->on('contacts');
             $table->foreignId('contact_rel_id');
             $table->foreign('contact_rel_id')
                 ->references('id')
-                ->on('contacts')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-
+                ->on('contacts');
         });
     }
 

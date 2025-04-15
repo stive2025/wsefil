@@ -118,15 +118,16 @@ class MessageController extends Controller
                         'last_message'=>$request->body,
                         'unread_message'=>1,
                         'contact_id'=>$contact_id,
-                        'user_id'=>User::where('role',3)->first()->id
+                        'user_id'=>($contact_id!=null) ? $contact->id : User::where('role',3)->first()->id
                     ]);
 
                     $chat_id=$create_chat->id;
-                    $user_id=User::where('role',3)->first()->id;
+                    $user_id=($contact_id!=null) ? $contact->id : User::where('role',3)->first()->id;
 
                 }
 
             }else{
+
                 $create_contact=Contact::create([
                     'name'=>$request->notify_name,
                     'phone_number'=>$request->number,
@@ -146,6 +147,7 @@ class MessageController extends Controller
     
                 $chat_id=$create_chat->id;
                 $user_id=User::where('role',3)->first()->id;
+                
             }
         }
 
