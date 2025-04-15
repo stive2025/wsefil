@@ -28,7 +28,10 @@ class ChatController extends Controller
             ->when(request()->filled('tag_id'),function($query){
                 $query->where('tag_id',request('tag_id'));
             })
-            ->where('user_id',Auth::user()->id)
+            ->when(request()->filled('contact_id'),function($query){
+                
+            })
+            // ->where('user_id',Auth::user()->id)
             ->orderBy('updated_at','DESC')
             ->paginate(7);
     }
