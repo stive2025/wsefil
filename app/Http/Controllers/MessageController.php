@@ -92,15 +92,21 @@ class MessageController extends Controller
             if($contact!=null){
 
                 $contact_id=$contact->id;
-                $prev_chat=Chat::where('contact_id',$contact_id)->whereIn('state',['OPEN','PENDING'])->first();
+                $prev_chat=Chat::where('contact_id',$contact_id)->first();
 
                 if($prev_chat!=null){
                     
                     $chat_id=$prev_chat->id;
+                    $state=$prev_chat->state;
+
+                    if($prev_chat->state=='CLOSED'){
+                        $state='OPEN';
+                    }
 
                     Chat::where('id',$chat_id)->update([
                         'last_message'=>$request->body,
-                        'unread_message'=>Chat::where('id',$chat_id)->first()->unread_message+1
+                        'unread_message'=>Chat::where('id',$chat_id)->first()->unread_message+1,
+                        'state'=>$state
                     ]);
 
                     $user_id=$prev_chat->user_id;
