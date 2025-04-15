@@ -5,6 +5,7 @@ use App\Http\Controllers\ConnectionController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -70,4 +71,13 @@ Route::get('/connections/{id}',[ConnectionController::class,'show']);
 Route::post('/connections',[ConnectionController::class,'store']);
 Route::put('/connections/{id}',[ConnectionController::class,'update']);
 Route::middleware('auth:sanctum')->delete('/connections/{id}',[ConnectionController::class,'destroy']);
+
+/**
+* ================================> EndPoints para Etiquetar chats
+*/
+Route::middleware('auth:sanctum')->get('/tags',[TagController::class,'index']);
+Route::middleware('auth:sanctum')->get('/tags/{id}',[TagController::class,'show']);
+Route::middleware('auth:sanctum')->post('/tags',[TagController::class,'store']);
+Route::middleware('auth:sanctum')->patch('/tags/{id}',[TagController::class,'update']);
+Route::middleware('auth:sanctum')->delete('/tags/{id}',[TagController::class,'destroy']);
  
