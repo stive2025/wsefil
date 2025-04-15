@@ -54,7 +54,7 @@ class TagController extends Controller
             "data"=>$id
         ],200);
     }
-
+    
     /**
      * Update the specified resource in storage.
      */
@@ -74,7 +74,7 @@ class TagController extends Controller
     public function destroy(Tag $id)
     {
         $id->delete();
-        
+
         return response()->json([
             "status"=>200,
             "data"=>"Etiqueta eliminada."

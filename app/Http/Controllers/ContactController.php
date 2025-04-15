@@ -49,7 +49,15 @@ class ContactController extends Controller
         if(preg_match('/^\d{11,}$/',$request->phone_number)){
 
             if(Contact::where('phone_number',$request->phone_number)->first()==null){
-                $create_contact=Contact::create($request->all());
+
+                $data=[
+                    'name'=>$request->name,
+                    'phone_number'=>$request->phone_number,
+                    'profile_picture'=>$request->profile_picture,
+                    'user_id'=>Auth::user()->id
+                ];
+
+                $create_contact=Contact::create($data);
 
                 return response()->json([
                     "status"=>200,
