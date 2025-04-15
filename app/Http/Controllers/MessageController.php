@@ -100,7 +100,7 @@ class MessageController extends Controller
                     $state=$prev_chat->state;
 
                     if($prev_chat->state=='CLOSED'){
-                        $state='OPEN';
+                        $state='PENDING';
                     }
 
                     Chat::where('id',$chat_id)->update([

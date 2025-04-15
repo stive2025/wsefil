@@ -16,7 +16,8 @@ class ContactController extends Controller
         return Contact::when(request()->filled('name'),function($query){
             $query->where('name','REGEXP',request('name'));
         })
-        ->paginate(7);
+            ->where('user_id',Auth::user()->id)
+            ->paginate(7);
     }
     
     public function indexChats(Request $request)
