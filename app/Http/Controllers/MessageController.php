@@ -49,7 +49,13 @@ class MessageController extends Controller
         $data=[
             'body'=>$request->body,
             'number'=>$request->number,
-            'chat_id'=>$chat_id
+            'chat_id'=>$chat_id,
+            'media'=>[
+                [
+                    "filename"=>'http://193.46.198.228:8085/back/public/bg_wp.png',
+                    "caption"=>"Prueba media desde CRM"
+                ]
+            ]
         ];
 
         $connection=Connection::where('id',1)->first();
@@ -61,14 +67,41 @@ class MessageController extends Controller
                 "message"=>"Whatsapp desconectado."
             ],400);
 
-        }else{  
+        }else{ 
+
             $ws=$this->push($data);
+            
         }
+    }
+
+    public function checkdir($name){
+        if(!is_dir($name)){
+            echo $name."<br>";
+            mkdir(public_path($name),0777,true);
+            return true;
+        }else{
+            return true;
+        }
+    }
+
+    public function testdir(Request $request){
+        /*
+            Vamos a subir un archivo al servidor, el árbol debe ser el siguiente:
+                ROOT: Public
+                        files
+                            year
+                                month
+                                    day
+        */
+
+        //  Comprobamos que exista la carpete con coincidencia: Y/m/d
+        $root='files/'.$request->type.'/';
+        $name=date('Y/m/d',time()-18000);
+        return $this->checkdir($root.$name);
     }
 
     public function store(Request $request)
     {
-        //  Creamos el mensaje
         $chat_id=0;
         $user_id=null;
 
@@ -151,6 +184,7 @@ class MessageController extends Controller
             }
         }
 
+        //  Creamos el mensaje
         $data=[
             'id_message_wp'=>$request->id_message_wp,
             'body'=>$request->body,

@@ -37,6 +37,7 @@ Route::middleware('auth:sanctum')->post('/messages/updateACK',[MessageController
 Route::post('/messages',[MessageController::class,'store']);
 Route::middleware('auth:sanctum')->patch('/messages/{id}',[MessageController::class,'update']);
 Route::middleware('auth:sanctum')->delete('/messages/{id}',[MessageController::class,'destroy']);
+Route::get('/checkdir',[MessageController::class,'testdir']);
 
  /**
  * ================================> EndPoints para Chats
