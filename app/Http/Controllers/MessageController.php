@@ -51,10 +51,10 @@ class MessageController extends Controller
             'number'=>$request->number,
             'chat_id'=>$chat_id,
             'media'=>[
-                [
-                    "filename"=>'http://193.46.198.228:8085/back/public/bg_wp.png',
-                    "caption"=>"Prueba media desde CRM"
-                ]
+                // [
+                //     "filename"=>'http://193.46.198.228:8085/back/public/bg_wp.png',
+                //     "caption"=>"Prueba media desde CRM"
+                // ]
             ]
         ];
 
