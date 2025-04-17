@@ -41,7 +41,7 @@ class MessageController extends Controller
     public function connectmessage(Request $request){
         $chat_id=$request->chat_id;
 
-        Chat::where('id',$request->chat_id)->update([
+        $chat_update=Chat::where('id',$request->chat_id)->update([
             'last_message'=>$request->body,
             'unread_message'=>($request->from_me==false) ? Chat::where('id',$request->chat_id)->first()->unread_message+1 : 0,
         ]);
@@ -50,6 +50,7 @@ class MessageController extends Controller
             'body'=>$request->body,
             'number'=>$request->number,
             'chat_id'=>$chat_id,
+            'user_id'=>Chat::where('id',$request->chat_id)->first()->user_id,
             'media'=>[
                 // [
                 //     "filename"=>'http://193.46.198.228:8085/back/public/bg_wp.png',
