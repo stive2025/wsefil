@@ -206,7 +206,7 @@ class MessageController extends Controller
             "status"=>200,
             "message"=>"Mensaje creado correctamente.",
             "user_id"=>$user_id,
-            "char_id"=>$chat_id
+            "chat_id"=>$chat_id
         ],200);
     }
 
