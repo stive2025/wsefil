@@ -50,7 +50,6 @@ class MessageController extends Controller
             'body'=>$request->body,
             'number'=>$request->number,
             'chat_id'=>$chat_id,
-            'user_id'=>Chat::where('id',$request->chat_id)->first()->user_id,
             'media'=>[
                 // [
                 //     "filename"=>'http://193.46.198.228:8085/back/public/bg_wp.png',
