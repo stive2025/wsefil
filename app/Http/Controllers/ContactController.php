@@ -34,7 +34,7 @@ class ContactController extends Controller
             ->paginate(7);
 
         foreach($contacts as $contact){
-            $contact->chats=$contact->find($contact->id)->chats()->first()->id;
+            $contact->chat_id=$contact->find($contact->id)->chats()->first()->id;
         }
 
         return $contacts;
