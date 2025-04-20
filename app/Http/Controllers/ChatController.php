@@ -157,6 +157,7 @@ class ChatController extends Controller
     
                 $create_message=Message::create($data);
                 $last_message=$request->body;
+
             }else{
                 $last_message=$id->last_message;
             }
@@ -166,6 +167,11 @@ class ChatController extends Controller
             ->update([
                 "last_message"=>$last_message,
                 'unread_message'=>intval($id->unread_message)+1,
+                "user_id"=>$request->to
+            ]);
+            
+        Contact::where('id',$id->contact_id)
+            ->update([
                 "user_id"=>$request->to
             ]);
 
