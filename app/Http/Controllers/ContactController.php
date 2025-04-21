@@ -13,11 +13,17 @@ class ContactController extends Controller
      */
     public function index()
     {
-        return Contact::when(request()->filled('name'),function($query){
+        $contactos=Contact::when(request()->filled('name'),function($query){
             $query->where('name','REGEXP',request('name'));
         })
             ->where('user_id',Auth::user()->id)
             ->paginate(7);
+
+        foreach($contactos as $contacto){
+            $contacto->chat=$contacto->find($contacto->id)->chats()->first();
+        }
+        
+        return $contactos;
     }
     
     public function indexChats(Request $request)
