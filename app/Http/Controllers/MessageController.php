@@ -50,6 +50,7 @@ class MessageController extends Controller
             'body'=>$request->body,
             'number'=>$request->number,
             'chat_id'=>$chat_id,
+            'from_me'=>true,
             'media'=>[
                 // [
                 //     "filename"=>'http://193.46.198.228:8085/back/public/bg_wp.png',
