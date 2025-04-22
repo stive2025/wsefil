@@ -16,7 +16,7 @@ class ChatController extends Controller
      */
     public function index()
     {
-        return Chat::when(request()->filled('state'),function($query){
+        $chats=Chat::when(request()->filled('state'),function($query){
                 $query->where('state',request('state'));
             })
             ->when(request()->filled('user_id'),function($query){
@@ -34,6 +34,13 @@ class ChatController extends Controller
             ->where('user_id',Auth::user()->id)
             ->orderBy('updated_at','DESC')
             ->paginate(7);
+        
+        foreach($chats as $chat){
+            $chat->ack=$chat->find($chat->id)->messages()->orderby('id','DESC')->first()->ack;
+        }
+        
+        return $chats;
+
     }
     
     /**
