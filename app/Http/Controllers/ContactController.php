@@ -22,7 +22,7 @@ class ContactController extends Controller
         foreach($contactos as $contacto){
             $contacto->chat=$contacto->find($contacto->id)->chats()->first();
         }
-        
+
         return $contactos;
     }
     
@@ -41,6 +41,7 @@ class ContactController extends Controller
 
         foreach($contacts as $contact){
             $contact->chat=$contact->find($contact->id)->chats()->first();
+            $contact->chat->ack=$contact->chat->find($contact->chat->id)->messages()->orderby('id','DESC')->first()->ack;
         }
 
         return $contacts;
