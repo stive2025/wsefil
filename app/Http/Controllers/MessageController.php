@@ -49,7 +49,7 @@ class MessageController extends Controller
         $data=[
             'body'=>$request->body,
             'number'=>$request->number,
-            'chat_id'=>$chat_id,
+            //'chat_id'=>$chat_id,
             'from_me'=>true,
             'media'=>[
                 [
