@@ -51,12 +51,12 @@ class MessageController extends Controller
             'number'=>$request->number,
             'chat_id'=>$chat_id,
             'from_me'=>true,
-            // 'media'=>[
-            //     [
-            //         "filename"=>'http://193.46.198.228:8085/back/public/bg_wp.png',
-            //         "caption"=>"Prueba media desde CRM"
-            //     ]
-            // ]
+            'media'=>[
+                // [
+                //     "filename"=>'http://193.46.198.228:8085/back/public/bg_wp.png',
+                //     "caption"=>"Prueba media desde CRM"
+                // ]
+            ]
         ];
 
         $connection=Connection::where('id',1)->first();
