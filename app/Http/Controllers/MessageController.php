@@ -49,14 +49,14 @@ class MessageController extends Controller
         $data=[
             'body'=>$request->body,
             'number'=>$request->number,
-            //'chat_id'=>$chat_id,
+            'chat_id'=>$chat_id,
             'from_me'=>true,
-            'media'=>[
-                [
-                    "filename"=>'http://193.46.198.228:8085/back/public/bg_wp.png',
-                    "caption"=>"Prueba media desde CRM"
-                ]
-            ]
+            // 'media'=>[
+            //     [
+            //         "filename"=>'http://193.46.198.228:8085/back/public/bg_wp.png',
+            //         "caption"=>"Prueba media desde CRM"
+            //     ]
+            // ]
         ];
 
         $connection=Connection::where('id',1)->first();
@@ -181,7 +181,6 @@ class MessageController extends Controller
     
                 $chat_id=$create_chat->id;
                 $user_id=User::where('role',3)->first()->id;
-
             }
         }
 
