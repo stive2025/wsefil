@@ -13,7 +13,7 @@ class ChatController extends Controller
 {
     /**
      * Display a listing of the resource.
-     */
+    */
     public function index()
     {
         $chats=Chat::when(request()->filled('state'),function($query){
@@ -37,10 +37,10 @@ class ChatController extends Controller
         
         foreach($chats as $chat){
             $chat->ack=$chat->find($chat->id)->messages()->orderby('id','DESC')->first()->ack;
+            $chat->from_me=$chat->find($chat->id)->messages()->orderby('id','DESC')->first()->from_me;
         }
         
         return $chats;
-
     }
     
     /**
