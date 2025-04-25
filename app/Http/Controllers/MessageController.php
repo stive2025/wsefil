@@ -46,17 +46,45 @@ class MessageController extends Controller
             'unread_message'=>($request->from_me==false) ? Chat::where('id',$request->chat_id)->first()->unread_message+1 : 0,
         ]);
 
+        $media_data=[];
+
+        if(request()->filled('media')){
+            $media=json_decode($request->media);
+
+            if(count($media)>0){
+
+                foreach($media as $file){
+                    $path=$this->testdir($file->type);
+                    $format="";
+                    $name=date('H:i:s',time()-18000);
+
+                    if($file->type=='audio'){
+                        $format='.wav';
+                    }else if($file->type=='image'){
+                        $format='.jpg';
+                    }else if($file->type=='video'){
+                        $format='.mp4';
+                    }else{
+                        $format='.pdf';
+                    }
+
+                    file_put_contents($path.$name.$format,base64_decode($file->media));
+                    
+                    array_push($media_data,[
+                        "filename"=>$path.$name.$format,
+                        "caption"=>$file->caption
+                    ]);
+                    
+                }
+            }
+        }
+
         $data=[
             'body'=>$request->body,
             'number'=>$request->number,
             'chat_id'=>$chat_id,
             'from_me'=>true,
-            'media'=>[
-                // [
-                //     "filename"=>'http://193.46.198.228:8085/back/public/bg_wp.png',
-                //     "caption"=>"Prueba media desde CRM"
-                // ]
-            ]
+            'media'=>$media_data
         ];
 
         $connection=Connection::where('id',1)->first();
@@ -68,10 +96,10 @@ class MessageController extends Controller
                 "message"=>"Whatsapp desconectado."
             ],400);
 
-        }else{ 
+        }else{
 
             $ws=$this->push($data);
-            
+        
         }
     }
 
@@ -85,7 +113,7 @@ class MessageController extends Controller
         }
     }
 
-    public function testdir(Request $request){
+    public function testdir($type){
         /*
             Vamos a subir un archivo al servidor, el árbol debe ser el siguiente:
                 ROOT: Public
@@ -96,9 +124,10 @@ class MessageController extends Controller
         */
 
         //  Comprobamos que exista la carpete con coincidencia: Y/m/d
-        $root='files/'.$request->type.'/';
+        $root='files/'.$type.'/';
         $name=date('Y/m/d',time()-18000);
-        return $this->checkdir($root.$name);
+        $dir=$this->checkdir($root.$name);
+        return $root.$name;
     }
 
     public function store(Request $request)
