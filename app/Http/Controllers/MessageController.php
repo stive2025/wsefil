@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use WebSocket\Client;
 use Exception;
 use Illuminate\Support\Facades\Auth;
+use Mockery\Undefined;
 
 class MessageController extends Controller
 {
@@ -42,7 +43,7 @@ class MessageController extends Controller
         $chat_id=$request->chat_id;
 
         $chat_update=Chat::where('id',$request->chat_id)->update([
-            'last_message'=>($request->body!="" & $request->body!=null) ? $request->body : "Multimedia",
+            'last_message'=>(count($request->media)==0) ? $request->body : "Multimedia",
             'unread_message'=>($request->from_me==false) ? Chat::where('id',$request->chat_id)->first()->unread_message+1 : 0,
         ]);
 
