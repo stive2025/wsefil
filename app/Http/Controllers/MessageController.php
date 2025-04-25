@@ -60,7 +60,7 @@ class MessageController extends Controller
                 foreach($media as $file){
                     $path=$this->testdir($file->type);
                     $format="";
-                    $name=date('H:i:s',time()-18000);
+                    $name=date('H_i_s',time()-18000);
 
                     if($file->type=='audio'){
                         $format='.wav';
@@ -72,7 +72,7 @@ class MessageController extends Controller
                         $format='.pdf';
                     }
 
-                    file_put_contents($path.$name.$format,base64_decode($file->media));
+                    file_put_contents($path.'/'.$name.$format,base64_decode($file->media));
                     
                     array_push($media_data,[
                         "filename"=>$path.$name.$format,
