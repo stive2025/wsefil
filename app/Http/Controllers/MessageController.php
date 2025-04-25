@@ -52,7 +52,8 @@ class MessageController extends Controller
             //$media=json_decode($request->media);
             $media=$request->media;
 
-            echo json_encode($media);
+            $media=json_encode($media);
+            $media=json_decode($media);
 
             if(count($media)>0){
 
