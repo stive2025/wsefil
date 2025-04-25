@@ -42,7 +42,7 @@ class MessageController extends Controller
         $chat_id=$request->chat_id;
 
         $chat_update=Chat::where('id',$request->chat_id)->update([
-            'last_message'=>($request->body!="" & $request->body!=null) ? $request->body : "Multimedia",
+            'last_message'=>"Multimedia",
             'unread_message'=>($request->from_me==false) ? Chat::where('id',$request->chat_id)->first()->unread_message+1 : 0,
         ]);
 
