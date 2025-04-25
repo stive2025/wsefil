@@ -220,7 +220,7 @@ class MessageController extends Controller
         //  Creamos el mensaje
         $data=[
             'id_message_wp'=>$request->id_message_wp,
-            'last_message'=>($request->body!="" & $request->body!=null) ? $request->body : "Multimedia",
+            'body'=>$request->body,
             'ack'=>$request->ack,
             'from_me'=>$request->from_me,
             'to'=>$request->to,
