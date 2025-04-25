@@ -63,7 +63,7 @@ class MessageController extends Controller
                     $name=date('H_i_s',time()-18000);
 
                     if($file->type=='audio'){
-                        $format='.wav';
+                        $format='.mp3';
                     }else if($file->type=='image'){
                         $format='.jpg';
                     }else if($file->type=='video'){
