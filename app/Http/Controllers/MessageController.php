@@ -42,7 +42,7 @@ class MessageController extends Controller
         $chat_id=$request->chat_id;
 
         $chat_update=Chat::where('id',$request->chat_id)->update([
-            'last_message'=>($request->body!="") ? $request->body : "Multimedia",
+            'last_message'=>($request->body!="" & $request->body!=null) ? $request->body : "Multimedia",
             'unread_message'=>($request->from_me==false) ? Chat::where('id',$request->chat_id)->first()->unread_message+1 : 0,
         ]);
 
@@ -144,7 +144,7 @@ class MessageController extends Controller
             $chat_id=$request->chat_id;
 
             Chat::where('id',$request->chat_id)->update([
-                'last_message'=>($request->body!="") ? $request->body : "Multimedia",
+                'last_message'=>($request->body!="" & $request->body!=null) ? $request->body : "Multimedia",
                 'unread_message'=>($request->from_me==false) ? Chat::where('id',$request->chat_id)->first()->unread_message+1 : 0
             ]);
 
@@ -171,7 +171,7 @@ class MessageController extends Controller
                     }
 
                     Chat::where('id',$chat_id)->update([
-                        'last_message'=>($request->body!="") ? $request->body : "Multimedia",
+                        'last_message'=>($request->body!="" & $request->body!=null) ? $request->body : "Multimedia",
                         'unread_message'=>Chat::where('id',$chat_id)->first()->unread_message+1,
                         'state'=>$state
                     ]);
@@ -182,7 +182,7 @@ class MessageController extends Controller
 
                     $create_chat=Chat::create([
                         'state'=>($request->from_me==true) ? 'OPEN' : 'PENDING',
-                        'last_message'=>$request->body,
+                        'last_message'=>($request->body!="" & $request->body!=null) ? $request->body : "Multimedia",
                         'unread_message'=>($request->from_me==true) ? 0 : 1,
                         'contact_id'=>$contact_id,
                         'user_id'=>($contact_id!=null) ? $contact->user_id : User::where('role',3)->first()->id
@@ -206,7 +206,7 @@ class MessageController extends Controller
 
                 $create_chat=Chat::create([
                     'state'=>'PENDING',
-                    'last_message'=>($request->body!="") ? $request->body : "Multimedia",
+                    'last_message'=>($request->body!="" & $request->body!=null) ? $request->body : "Multimedia",
                     'unread_message'=>1,
                     'contact_id'=>$contact_id,
                     'user_id'=>User::where('role',3)->first()->id
@@ -220,7 +220,7 @@ class MessageController extends Controller
         //  Creamos el mensaje
         $data=[
             'id_message_wp'=>$request->id_message_wp,
-            'body'=>$request->body,
+            'last_message'=>($request->body!="" & $request->body!=null) ? $request->body : "Multimedia",
             'ack'=>$request->ack,
             'from_me'=>$request->from_me,
             'to'=>$request->to,
