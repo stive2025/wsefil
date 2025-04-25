@@ -55,7 +55,7 @@ class MessageController extends Controller
             if(count($media)>0){
 
                 foreach($media as $file){
-                    $path=$this->testdir($file->type);
+                    $path=$this->testdir($file['type']);
                     $format="";
                     $name=date('H:i:s',time()-18000);
 
