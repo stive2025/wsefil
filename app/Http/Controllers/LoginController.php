@@ -13,8 +13,8 @@ class LoginController extends Controller
         $user=User::where('email',$request->email)->first();
 
         if($user && password_verify($request->password,$user->password)){
-            $token=$user->createToken('login',$user->abilities);
-
+            $token=$user->createToken('login',json_decode($user->abilities));
+            
             return response()->json([
                 "status"=>200,
                 "token"=>$token,
