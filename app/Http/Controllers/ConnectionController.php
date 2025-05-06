@@ -29,17 +29,17 @@ class ConnectionController extends Controller
 
         $connection=Connection::first();
 
-        if($connection==null){
+        //if($connection==null){
             $create_connection=Connection::create([
                 'qr_code'=>$request->code_qr,
                 'status'=>"PENDING"
             ]);
-        }else{
-            $update_connection=Connection::where('id',$connection->id)->update([
-                'qr_code'=>$request->code_qr,
-                'status'=>$request->status
-            ]);
-        }
+        // }else{
+        //     $update_connection=Connection::where('id',$connection->id)->update([
+        //         'qr_code'=>$request->code_qr,
+        //         'status'=>$request->status
+        //     ]);
+        // }
 
         return response()->json([
             "status"=>200,
