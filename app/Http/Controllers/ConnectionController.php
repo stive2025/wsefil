@@ -32,6 +32,9 @@ class ConnectionController extends Controller
         //if($connection==null){
             $create_connection=Connection::create([
                 'qr_code'=>$request->code_qr,
+                'name'=>$request->name,
+                'greeting_message'=>$request->greeting_message,
+                'farewell_message'=>$request->farewell_message,
                 'status'=>"PENDING"
             ]);
         // }else{
