@@ -194,7 +194,7 @@ class MessageController extends Controller
                 }
 
             }else{
-
+                
                 $create_contact=Contact::create([
                     'name'=>$request->notify_name,
                     'phone_number'=>$request->number,

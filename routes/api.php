@@ -43,7 +43,7 @@ Route::get('/checkdir',[MessageController::class,'testdir']);
  * ================================> EndPoints para Chats
  */
 
-Route::middleware('auth:sanctum')->get('/chats',[ChatController::class,'index']);
+Route::get('/chats',[ChatController::class,'index']);
 Route::middleware('auth:sanctum')->post('/chats/search/{id}',[ChatController::class,'search']);
 Route::get('chats/download/{id}',[ChatController::class,'download']);
 Route::middleware('auth:sanctum')->get('/chats/{id}',[ChatController::class,'show']);
