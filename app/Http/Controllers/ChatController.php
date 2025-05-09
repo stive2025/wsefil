@@ -36,7 +36,7 @@ class ChatController extends Controller
             ->paginate(7);
         
         foreach($chats as $chat){
-            $chat->ack=($chat->find($chat->id)->messages()->orderby('id','DESC')->first()->ack!=null) ? $chat->find($chat->id)->messages()->orderby('id','DESC')->first()->ack : 0;
+            $chat->ack=$chat->find($chat->id)->messages()->orderby('id','DESC')->first()->ack;
             $chat->from_me=$chat->find($chat->id)->messages()->orderby('id','DESC')->first()->from_me;
         }
         
