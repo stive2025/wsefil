@@ -67,7 +67,7 @@ class ChatController extends Controller
         
         return $chat;
     }
-
+    
     public function search(Chat $id)
     {
         $data=$id->find($id->id)->messages()

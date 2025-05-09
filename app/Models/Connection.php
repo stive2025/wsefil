@@ -17,7 +17,7 @@ class Connection extends Model
         'is_default',
         'greeting_message',
         'farewell_message',
-        'number'
+        'number',
+        'user_id'
     ];
-
 }
