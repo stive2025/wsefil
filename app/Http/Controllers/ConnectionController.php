@@ -27,9 +27,9 @@ class ConnectionController extends Controller
         $data=[];
 
         foreach($connections as $connection){
-            array_push($data,$connection->id);
+            array_push($data,$connection->user_id);
         }
-
+        
         return response()->json([
             "status"=>200,
             "data"=>$data
