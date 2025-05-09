@@ -20,6 +20,22 @@ class ConnectionController extends Controller
         ],200);
         
     }
+
+    public function indexSessions()
+    {
+        $connections=Connection::get();
+        $data=[];
+
+        foreach($connections as $connection){
+            array_push($data,$connection->id);
+        }
+
+        return response()->json([
+            "status"=>200,
+            "data"=>$data
+        ],200);
+        
+    }
     
     /**
      * Store a newly created resource in storage.

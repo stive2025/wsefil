@@ -68,6 +68,7 @@ Route::middleware('auth:sanctum')->delete('/contacts/{id}',[ContactController::c
  */
 
 Route::middleware('auth:sanctum')->get('/connections',[ConnectionController::class,'index']);
+Route::get('/connections/list',[ConnectionController::class,'indexSessions']);
 Route::get('/connections/{id}',[ConnectionController::class,'show']);
 Route::post('/connections',[ConnectionController::class,'store']);
 Route::put('/connections/{id}',[ConnectionController::class,'update']);
