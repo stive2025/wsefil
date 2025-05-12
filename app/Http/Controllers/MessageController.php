@@ -285,7 +285,8 @@ class MessageController extends Controller
         return response()->json([
             "status"=>200,
             "message"=>"ACK actualizado.",
-            "data"=>Message::where('id_message_wp',$request->id_wp)->where('from_me',$request->from_me)->first()->chat_id
+            "chat_id"=>Message::where('id_message_wp',$request->id_wp)->where('from_me',$request->from_me)->first()->chat_id,
+            "user_id"=>Message::where('id_message_wp',$request->id_wp)->where('from_me',$request->from_me)->first()->user_id
         ],200);
     }
 
