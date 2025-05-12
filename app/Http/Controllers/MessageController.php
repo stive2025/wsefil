@@ -40,162 +40,87 @@ class MessageController extends Controller
     }
 
     public function connectmessage(Request $request){
-        
-        if(isset($request->chat_id)){ //El chat existe
-            
+
+        if(request()->filled('chat_id')){
+
             $chat_id=$request->chat_id;
+            $chat=Chat::where('id',$request->chat_id)->first();
 
-            Chat::where('id',$request->chat_id)->update([
-                'last_message'=>($request->media_type=="chat") ? $request->body : "Multimedia",
-                'unread_message'=>($request->from_me==false) ? Chat::where('id',$request->chat_id)->first()->unread_message+1 : 0
+            $chat_update=Chat::where('id',$request->chat_id)->update([
+                'last_message'=>(request()->filled('media')) ? $request->body : "Multimedia",
+                'unread_message'=>($request->from_me==false) ? Chat::where('id',$request->chat_id)->first()->unread_message+1 : 0,
             ]);
-
-            $user_id=Chat::where('id',$request->chat_id)->first()->user_id;
-            
-            $media_data=[];
-
-            if(request()->filled('media')){
-                //$media=json_decode($request->media);
-                $media=$request->media;
-    
-                //$media=json_encode($media);
-                $media=json_decode($media);
-    
-                if(count($media)>0){
-    
-                    foreach($media as $file){
-                        $path=$this->testdir($file->type);
-                        $format="";
-                        $name=date('H_i_s',time()-18000);
-    
-                        if($file->type=='audio'){
-                            $format='.m4a';
-                        }else if($file->type=='image'){
-                            $format='.jpg';
-                        }else if($file->type=='video'){
-                            $format='.mp4';
-                        }else{
-                            $format='.pdf';
-                        }
-    
-                        file_put_contents($path.'/'.$name.$format,base64_decode($file->media));
-                        
-                        array_push($media_data,[
-                            "filename"=>$path.'/'.$name.$format,
-                            "caption"=>($file->caption!="") ? $file->caption : ""
-                        ]);
-                    }
-                }
-            }
-    
-            $data=[
-                'body'=>$request->body,
-                'number'=>$request->number,
-                'chat_id'=>$chat_id,
-                'from_me'=>true,
-                'media'=>$media_data,
-                'user_id'=>$user_id
-            ];
-    
-            $connection=Connection::where('id',1)->first();
-    
-            if($connection->status=='DISCONNECTED'){
-                
-                return response()->json([
-                    "status"=>400,
-                    "message"=>"Whatsapp desconectado."
-                ],400);
-    
-            }else{
-    
-                $ws=$this->push($data);
-            
-            }
 
         }else{
 
-            //  Buscamos si existe el contacto
-            $contact=Contact::where('phone_number',$request->number)->first();
-            $contact_id=0;
+            $chat=Chat::create([
+                'state'=>'OPEN',
+                'last_message'=>(request()->filled('media')) ? $request->body : "Multimedia",
+                'unread_message'=>1,
+                'contact_id'=>Contact::where('phone_number',$request->number)->first()->id,
+                'user_id'=>Contact::where('phone_number',$request->number)->first()->user_id
+            ]);
 
-            if($contact!=null){
+        }
 
-                $contact_id=$contact->id;
-                $prev_chat=Chat::where('contact_id',$contact_id)->first();
+        $media_data=[];
 
-                if($prev_chat!=null){
-                    
-                    $chat_id=$prev_chat->id;
-                    $state=$prev_chat->state;
+        if(request()->filled('media')){
+            //$media=json_decode($request->media);
+            $media=$request->media;
 
-                    if($prev_chat->state=='CLOSED'){
-                        $state='PENDING';
+            //$media=json_encode($media);
+            $media=json_decode($media);
+
+            if(count($media)>0){
+
+                foreach($media as $file){
+                    $path=$this->testdir($file->type);
+                    $format="";
+                    $name=date('H_i_s',time()-18000);
+
+                    if($file->type=='audio'){
+                        $format='.m4a';
+                    }else if($file->type=='image'){
+                        $format='.jpg';
+                    }else if($file->type=='video'){
+                        $format='.mp4';
+                    }else{
+                        $format='.pdf';
                     }
 
-                    Chat::where('id',$chat_id)->update([
-                        'last_message'=>($request->media_type=="chat") ? $request->body : "Multimedia",
-                        'unread_message'=>Chat::where('id',$chat_id)->first()->unread_message+1,
-                        'state'=>$state
+                    file_put_contents($path.'/'.$name.$format,base64_decode($file->media));
+                    
+                    array_push($media_data,[
+                        "filename"=>$path.'/'.$name.$format,
+                        "caption"=>($file->caption!="") ? $file->caption : ""
                     ]);
-
-                    $user_id=$prev_chat->user_id;
-
-                }else{
-
-                    $create_chat=Chat::create([
-                        'state'=>($request->from_me==true) ? 'OPEN' : 'PENDING',
-                        'last_message'=>($request->media_type=="chat") ? $request->body : "Multimedia",
-                        'unread_message'=>($request->from_me==true) ? 0 : 1,
-                        'contact_id'=>$contact_id,
-                        'user_id'=>($contact_id!=null) ? $contact->user_id : User::where('role',3)->first()->id
-                    ]);
-
-                    $chat_id=$create_chat->id;
-                    $user_id=($contact_id!=null) ? $contact->user_id : User::where('role',3)->first()->id;
-
                 }
-
-            }else{
-                
-                $create_contact=Contact::create([
-                    'name'=>$request->notify_name,
-                    'phone_number'=>$request->number,
-                    'profile_picture'=>"",
-                    'user_id'=>User::where('role',3)->first()->id
-                ]);
-                
-                $contact_id=$create_contact->id;
-
-                $create_chat=Chat::create([
-                    'state'=>'PENDING',
-                    'last_message'=>($request->media_type=="chat") ? $request->body : "Multimedia",
-                    'unread_message'=>1,
-                    'contact_id'=>$contact_id,
-                    'user_id'=>User::where('role',3)->first()->id
-                ]);
-    
-                $chat_id=$create_chat->id;
-                $user_id=User::where('role',3)->first()->id;
             }
+        }
 
-            //  Creamos el mensaje
-            $data=[
-                'id_message_wp'=>$request->id_message_wp,
-                'body'=>$request->body,
-                'ack'=>$request->ack,
-                'from_me'=>$request->from_me,
-                'to'=>$request->to,
-                'media_type'=>$request->media_type,
-                'media_path'=>$request->media_url,
-                'timestamp_wp'=>$request->timestamp,
-                'is_private'=>$request->is_private,
-                'state'=>"G_TEST",
-                'created_by'=>$user_id,
-                'chat_id'=>$chat_id
-            ];
+        $data=[
+            'body'=>$request->body,
+            'number'=>$request->number,
+            'chat_id'=>$chat_id,
+            'from_me'=>true,
+            'media'=>$media_data,
+            'user_id'=>$chat->user_id
+        ];
 
-            $create_message=Message::create($data);
+        $connection=Connection::where('id',1)->first();
 
+        if($connection->status=='DISCONNECTED'){
+            
+            return response()->json([
+                "status"=>400,
+                "message"=>"Whatsapp desconectado."
+            ],400);
+
+        }else{
+
+            $ws=$this->push($data);
+        
         }
     }
 
