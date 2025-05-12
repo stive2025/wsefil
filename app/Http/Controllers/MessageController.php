@@ -108,7 +108,7 @@ class MessageController extends Controller
             'user_id'=>$chat->user_id
         ];
 
-        $connection=Connection::where('id',1)->first();
+        $connection=Connection::where('user_id',$chat->user_id)->first();
 
         if($connection->status=='DISCONNECTED'){
             
