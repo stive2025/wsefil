@@ -121,7 +121,9 @@ class MessageController extends Controller
         }else{
 
             $ws=$this->push($data);
-        
+            
+            return $data;
+
         }
     }
 
