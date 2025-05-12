@@ -69,11 +69,14 @@ class ConnectionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Connection $id)
+    public function show(Request $request,string $id)
     {   
+
+        $connection=Connection::where('user_id',$id)->first();
+
         return response()->json([
             "status"=>200,
-            "data"=>$id
+            "data"=>$connection
         ],200);
     }
 
