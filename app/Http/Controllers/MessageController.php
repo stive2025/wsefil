@@ -53,14 +53,15 @@ class MessageController extends Controller
 
         }else{
 
+            $contact=Contact::where('phone_number',$request->number)->first();
+
             $chat=Chat::create([
                 'state'=>'OPEN',
                 'last_message'=>(request()->filled('media')) ? $request->body : "Multimedia",
                 'unread_message'=>1,
-                'contact_id'=>Contact::where('phone_number',$request->number)->first()->id,
-                'user_id'=>Contact::where('phone_number',$request->number)->first()->user_id
+                'contact_id'=>$contact->id,
+                'user_id'=>$contact->user_id
             ]);
-
         }
 
         $media_data=[];
