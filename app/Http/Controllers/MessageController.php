@@ -40,12 +40,16 @@ class MessageController extends Controller
     }
 
     public function connectmessage(Request $request){
+        
         $chat_id=$request->chat_id;
+        $chat=Chat::where('id',$request->chat_id)->first();
 
         $chat_update=Chat::where('id',$request->chat_id)->update([
             'last_message'=>(request()->filled('media')) ? $request->body : "Multimedia",
             'unread_message'=>($request->from_me==false) ? Chat::where('id',$request->chat_id)->first()->unread_message+1 : 0,
         ]);
+
+        $chat=Chat::where('id',$request->chat_id)->first();
 
         $media_data=[];
 
@@ -88,7 +92,8 @@ class MessageController extends Controller
             'number'=>$request->number,
             'chat_id'=>$chat_id,
             'from_me'=>true,
-            'media'=>$media_data
+            'media'=>$media_data,
+            'user_id'=>$chat->user_id
         ];
 
         $connection=Connection::where('id',1)->first();
