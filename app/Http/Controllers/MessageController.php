@@ -286,7 +286,7 @@ class MessageController extends Controller
             "status"=>200,
             "message"=>"ACK actualizado.",
             "chat_id"=>Message::where('id_message_wp',$request->id_wp)->where('from_me',$request->from_me)->first()->chat_id,
-            "user_id"=>Message::where('id_message_wp',$request->id_wp)->where('from_me',$request->from_me)->first()->user_id
+            "user_id"=>Message::where('id_message_wp',$request->id_wp)->where('from_me',$request->from_me)->first()->created_by
         ],200);
     }
 
