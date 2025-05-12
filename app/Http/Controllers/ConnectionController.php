@@ -80,11 +80,9 @@ class ConnectionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Connection $id)
     {
-        $connection=Connection::first();
-
-        $update_connection=Connection::where('id',$connection->id)->update($request->all());
+        $update_connection=Connection::where('id',$id->id)->update($request->all());
 
         return response()->json([
             "status"=>200,
