@@ -107,7 +107,7 @@ class MessageController extends Controller
             'media'=>$media_data,
             'user_id'=>$chat->user_id
         ];
-
+        
         $connection=Connection::where('id',1)->first();
 
         if($connection->status=='DISCONNECTED'){
