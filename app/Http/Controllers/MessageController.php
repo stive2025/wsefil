@@ -102,12 +102,12 @@ class MessageController extends Controller
         $data=[
             'body'=>$request->body,
             'number'=>$request->number,
-            'chat_id'=>$chat_id,
+            'chat_id'=>$chat->id,
             'from_me'=>true,
             'media'=>$media_data,
             'user_id'=>$chat->user_id
         ];
-        
+
         $connection=Connection::where('id',1)->first();
 
         if($connection->status=='DISCONNECTED'){
