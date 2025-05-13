@@ -17,7 +17,7 @@ class ChatController extends Controller
     public function index()
     {
 
-        if(Auth::user()->tokenCan('chats.filter.agents')){
+        if(Auth::user()->tokenCan('chats.filter.agent')){
             $chats=Chat::when(request()->filled('state'),function($query){
                 $query->where('state',request('state'));
             })
