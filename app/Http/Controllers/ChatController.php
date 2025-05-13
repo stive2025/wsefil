@@ -16,7 +16,9 @@ class ChatController extends Controller
     */
     public function index()
     {
-        $chats=Chat::when(request()->filled('state'),function($query){
+
+        if(Auth::user()->tokenCan('chats.filter.agents')){
+            $chats=Chat::when(request()->filled('state'),function($query){
                 $query->where('state',request('state'));
             })
             ->when(request()->filled('user_id'),function($query){
@@ -31,9 +33,30 @@ class ChatController extends Controller
             ->when(request()->filled('contact_id'),function($query){
                 
             })
-            ->where('user_id',Auth::user()->id)
-            ->orderBy('updated_at','DESC')
-            ->paginate(7);
+                //->where('user_id',Auth::user()->id)
+                ->orderBy('updated_at','DESC')
+                ->paginate(7);
+        }else{
+            $chats=Chat::when(request()->filled('state'),function($query){
+                $query->where('state',request('state'));
+            })
+            ->when(request()->filled('user_id'),function($query){
+                $query->where('user_id',request('user_id'));
+            })
+            ->when(request()->filled('state'),function($query){
+                $query->where('state',request('state'));
+            })
+            ->when(request()->filled('tag_id'),function($query){
+                $query->where('tag_id',request('tag_id'));
+            })
+            ->when(request()->filled('contact_id'),function($query){
+                
+            })
+                ->where('user_id',Auth::user()->id)
+                ->orderBy('updated_at','DESC')
+                ->paginate(7);
+        }
+
         
         foreach($chats as $chat){
             $chat->ack=$chat->find($chat->id)->messages()->orderby('id','DESC')->first()->ack;
