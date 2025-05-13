@@ -219,7 +219,7 @@ class MessageController extends Controller
                     'name'=>$request->notify_name,
                     'phone_number'=>$request->number,
                     'profile_picture'=>"",
-                    'user_id'=>User::where('role',3)->first()->id
+                    'user_id'=>User::where('role',2)->first()->id
                 ]);
                 
                 $contact_id=$create_contact->id;
@@ -229,11 +229,11 @@ class MessageController extends Controller
                     'last_message'=>($request->media_type=="chat") ? $request->body : "Multimedia",
                     'unread_message'=>1,
                     'contact_id'=>$contact_id,
-                    'user_id'=>User::where('role',3)->first()->id
+                    'user_id'=>User::where('role',2)->first()->id
                 ]);
     
                 $chat_id=$create_chat->id;
-                $user_id=User::where('role',3)->first()->id;
+                $user_id=User::where('role',2)->first()->id;
             }
         }
 
