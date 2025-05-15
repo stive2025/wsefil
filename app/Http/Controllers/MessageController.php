@@ -251,7 +251,7 @@ class MessageController extends Controller
             'state'=>"G_TEST",
             'created_by'=>$user_id,
             'chat_id'=>$chat_id,
-            'temp_signature'=>$request->tempSignature
+            'temp_signature'=>$request->temp_signature
         ];
 
         $create_message=Message::create($data);
@@ -275,8 +275,7 @@ class MessageController extends Controller
 
     /**
      * Update the specified resource in storage.
-     */
-
+    */
     public function updateACK(Request $request)
     {
         $update_ack=Message::where('id_message_wp',$request->id_wp)
