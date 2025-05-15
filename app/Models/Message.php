@@ -13,6 +13,7 @@ class Message extends Model
         'id_message_wp',
         'body',
         'ack',
+        'temp_signature',
         'from_me',
         'to',
         'media_type',

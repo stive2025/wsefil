@@ -43,7 +43,7 @@ class ContactController extends Controller
             $contact->chat=$contact->find($contact->id)->chats()->first();
             $contact->chat->ack=$contact->chat->find($contact->chat->id)->messages()->orderby('id','DESC')->first()->ack;
         }
-
+        
         return $contacts;
     }
 

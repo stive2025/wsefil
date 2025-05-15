@@ -99,14 +99,15 @@ class MessageController extends Controller
                 }
             }
         }
-
+        
         $data=[
             'body'=>$request->body,
             'number'=>$request->number,
             'chat_id'=>$chat->id,
             'from_me'=>true,
             'media'=>$media_data,
-            'user_id'=>$chat->user_id
+            'user_id'=>$chat->user_id,
+            'temp_signature'=>$request->tempSignature
         ];
 
         $connection=Connection::where('user_id',$chat->user_id)->first();
@@ -121,9 +122,8 @@ class MessageController extends Controller
         }else{
 
             $ws=$this->push($data);
-            
             return $data;
-
+            
         }
     }
 
@@ -250,7 +250,8 @@ class MessageController extends Controller
             'is_private'=>$request->is_private,
             'state'=>"G_TEST",
             'created_by'=>$user_id,
-            'chat_id'=>$chat_id
+            'chat_id'=>$chat_id,
+            'temp_signature'=>$request->tempSignature
         ];
 
         $create_message=Message::create($data);
