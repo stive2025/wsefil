@@ -99,7 +99,7 @@ class MessageController extends Controller
                 }
             }
         }
-        
+
         $data=[
             'body'=>$request->body,
             'number'=>$request->number,
@@ -289,7 +289,8 @@ class MessageController extends Controller
             "status"=>200,
             "message"=>"ACK actualizado.",
             "chat_id"=>Message::where('id_message_wp',$request->id_wp)->where('from_me',$request->from_me)->first()->chat_id,
-            "user_id"=>Message::where('id_message_wp',$request->id_wp)->where('from_me',$request->from_me)->first()->created_by
+            "user_id"=>Message::where('id_message_wp',$request->id_wp)->where('from_me',$request->from_me)->first()->created_by,
+            "temp_signature"=>Message::where('id_message_wp',$request->id_wp)->where('from_me',$request->from_me)->first()->temp_signature
         ],200);
     }
 
