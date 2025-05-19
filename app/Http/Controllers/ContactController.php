@@ -106,12 +106,14 @@ class ContactController extends Controller
 
                 $create_contact=Contact::create($data);
 
-                return true;
+                return [
+                    "status"=>200
+                ];
 
             }else{
-
-                return false;
-                
+                return [
+                    "status"=>"FOUND"
+                ];
             }
         }
     }
