@@ -239,7 +239,7 @@ class MessageController extends Controller
 
         if(request()->filled('data')){
             $name=$this->testdir($request->filetype);
-            $file=file_put_contents($name.date('H:i:s',time()-18000).'.'.$request->fileformat, base64_decode($request->data));
+            $file=file_put_contents($name.'/'.date('H:i:s',time()-18000).'.'.$request->fileformat, base64_decode($request->data));
         }
 
         //  Creamos el mensaje
