@@ -238,7 +238,7 @@ class MessageController extends Controller
         }
 
         // if(request()->filled('data')){
-            file_put_contents('public/files/prueba2.png', base64_decode($request->data));
+            $file=file_put_contents('files/nuevo.png', base64_decode($request->data));
         // }
 
         //  Creamos el mensaje
@@ -265,7 +265,8 @@ class MessageController extends Controller
             "message"=>"Mensaje creado correctamente.",
             "user_id"=>$user_id,
             "chat_id"=>$chat_id,
-            "media"=>$request->body
+            "media"=>$request->body,
+            "file"=>$file
         ],200);
     }
 
