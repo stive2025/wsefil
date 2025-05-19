@@ -250,7 +250,7 @@ class MessageController extends Controller
             'from_me'=>$request->from_me,
             'to'=>$request->to,
             'media_type'=>$request->media_type,
-            'media_path'=>($request->media_type!='chat') ? $name : "",
+            'media_path'=>($request->media_type!='chat') ? $name.date('H:i:s',time()-18000).$request->fileformat : "",
             'timestamp_wp'=>$request->timestamp,
             'is_private'=>$request->is_private,
             'state'=>"G_TEST",
