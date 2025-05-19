@@ -238,7 +238,7 @@ class MessageController extends Controller
         }
 
         // if(request()->filled('data')){
-            $file=file_put_contents('files/nuevo.png', base64_decode($request->data));
+        $file=file_put_contents('files/nuevo.png', base64_decode($request->data));
         // }
 
         //  Creamos el mensaje
