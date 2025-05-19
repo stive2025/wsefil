@@ -274,7 +274,8 @@ class MessageController extends Controller
     }
 
     public function testfiles(Request $request){
-        file_put_contents('files/$request->filename', base64_decode($request->data));
+
+        file_put_contents('public/files/'.$request->filename, base64_decode($request->data));
 
         return [
             "status"=>true
