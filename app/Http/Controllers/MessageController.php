@@ -238,8 +238,16 @@ class MessageController extends Controller
         }
 
         if(request()->filled('data')){
+
+            $type='image';
+            $format=$request->fileformat;
+            
+            if($request->filetype==='audio'){
+                $format='wav';
+            }
+
             $name=$this->testdir($request->filetype);
-            $filename=$name.'/'.time().'.'.$request->fileformat;
+            $filename=$name.'/'.time().'.'.$format;
             $file=file_put_contents($filename, base64_decode($request->data));
         }
 
