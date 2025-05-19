@@ -283,7 +283,8 @@ class MessageController extends Controller
         file_put_contents('files/'.$request->filename, base64_decode($request->data));
 
         return [
-            "status"=>true
+            "status"=>true,
+            "imagen"=>""
         ];
     }
 
