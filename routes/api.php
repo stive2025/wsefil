@@ -33,6 +33,7 @@ Route::middleware('auth:sanctum')->delete('/users/{id}',[UserController::class,'
 Route::middleware('auth:sanctum')->get('/messages',[MessageController::class,'index']);
 Route::middleware('auth:sanctum')->get('/messages/{id}',[MessageController::class,'show']);
 Route::middleware('auth:sanctum')->post('/messages/connect',[MessageController::class,'connectmessage']);
+Route::post('/messages/testfile',[MessageController::class,'testfile']);
 Route::post('/messages/updateACK',[MessageController::class,'updateACK']);
 Route::post('/messages',[MessageController::class,'store']);
 Route::middleware('auth:sanctum')->patch('/messages/{id}',[MessageController::class,'update']);
