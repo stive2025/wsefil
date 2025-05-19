@@ -77,20 +77,15 @@ class MessageController extends Controller
 
                 foreach($media as $file){
                     $path=$this->testdir($file->type);
-                    $format="";
+
+                    $format=explode('/',$file->media_type)[1];
                     $name=date('H_i_s',time()-18000);
 
                     if($file->type=='audio'){
-                        $format='.m4a';
-                    }else if($file->type=='image'){
-                        $format='.jpg';
-                    }else if($file->type=='video'){
-                        $format='.mp4';
-                    }else{
-                        $format='.pdf';
+                        $format='wav';
                     }
-
-                    file_put_contents($path.'/'.$name.$format,base64_decode($file->media));
+                    
+                    file_put_contents($path.'/'.$name.'.'.$format,base64_decode($file->media));
                     
                     array_push($media_data,[
                         "filename"=>$path.'/'.$name.$format,
