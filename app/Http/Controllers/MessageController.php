@@ -262,7 +262,7 @@ class MessageController extends Controller
 
         return response()->json([
             "status"=>200,
-            "message"=>"Mensaje creado correctamente.",
+            "message"=>"Mensaje creado correctamente con cambios.",
             "user_id"=>$user_id,
             "chat_id"=>$chat_id,
             "media"=>$data,
