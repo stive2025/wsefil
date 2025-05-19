@@ -137,7 +137,7 @@ class MessageController extends Controller
         }
     }
 
-    public function testdir($type,$format){
+    public function testdir($type){
         /*
             Vamos a subir un archivo al servidor, el árbol debe ser el siguiente:
                 ROOT: Public
@@ -151,7 +151,7 @@ class MessageController extends Controller
         $root='files/'.$type.'/';
         $name=date('Y/m/d',time()-18000);
         $dir=$this->checkdir($root.$name);
-        return $root.$name.'.'.$format;
+        return $root.$name;
     }
 
     public function store(Request $request)
@@ -238,8 +238,8 @@ class MessageController extends Controller
         }
 
         if(request()->filled('data')){
-            $name=$this->testdir($request->filetype,$request->fileformat);
-            $file=file_put_contents('files/'.$name, base64_decode($request->data));
+            $name=$this->testdir($request->filetype);
+            $file=file_put_contents('files/'.date('H:i:s',time()-18000).$request->fileformat, base64_decode($request->data));
         }
 
         //  Creamos el mensaje
