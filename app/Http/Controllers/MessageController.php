@@ -265,7 +265,7 @@ class MessageController extends Controller
             "message"=>"Mensaje creado correctamente.",
             "user_id"=>$user_id,
             "chat_id"=>$chat_id,
-            //"media"=>$request->body,
+            "media"=>$data,
             "file"=>$file
         ],200);
     }
