@@ -237,7 +237,7 @@ class MessageController extends Controller
             }
         }
 
-        if($request->media_type!='chat'){
+        if(request()->filled('data')){
             file_put_contents('files/'.$request->filename, base64_decode($request->data));
         }
 
