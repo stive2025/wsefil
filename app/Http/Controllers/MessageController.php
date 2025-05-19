@@ -137,7 +137,7 @@ class MessageController extends Controller
         }
     }
 
-    public function testdir($type){
+    public function testdir($type,$format){
         /*
             Vamos a subir un archivo al servidor, el árbol debe ser el siguiente:
                 ROOT: Public
@@ -151,7 +151,7 @@ class MessageController extends Controller
         $root='files/'.$type.'/';
         $name=date('Y/m/d',time()-18000);
         $dir=$this->checkdir($root.$name);
-        return $root.$name;
+        return $root.$name.'.'.$format;
     }
 
     public function store(Request $request)
@@ -237,9 +237,11 @@ class MessageController extends Controller
             }
         }
 
-        // if(request()->filled('data')){
-        $file=file_put_contents('files/'.$request->filename, base64_decode($request->data));
-        // }
+        if(request()->filled('data')){
+            $name=$this->testdir($request->filetype,$request->fileformat);
+            $file=file_put_contents('files/'.$name, base64_decode($request->data));
+        }
+
         //  Creamos el mensaje
         $data=[
             'id_message_wp'=>$request->id_message_wp,
@@ -248,7 +250,7 @@ class MessageController extends Controller
             'from_me'=>$request->from_me,
             'to'=>$request->to,
             'media_type'=>$request->media_type,
-            'media_path'=>($request->media_type!='chat') ? $request->filename : "",
+            'media_path'=>($request->media_type!='chat') ? $name : "",
             'timestamp_wp'=>$request->timestamp,
             'is_private'=>$request->is_private,
             'state'=>"G_TEST",
