@@ -237,9 +237,9 @@ class MessageController extends Controller
             }
         }
 
-        if(request()->filled('data')){
-            file_put_contents('./public/files/'.$request->filename, base64_decode($request->data));
-        }
+        // if(request()->filled('data')){
+            file_put_contents('files/'.$request->filename, base64_decode($request->data));
+        // }
 
         //  Creamos el mensaje
         $data=[
