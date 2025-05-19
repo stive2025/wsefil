@@ -84,11 +84,11 @@ class MessageController extends Controller
                     if($file->type=='audio'){
                         $format='wav';
                     }
-                    
+
                     file_put_contents($path.'/'.$name.'.'.$format,base64_decode($file->media));
                     
                     array_push($media_data,[
-                        "filename"=>$path.'/'.$name.$format,
+                        "filename"=>$path.'/'.$name.'.'.$format,
                         "caption"=>($file->caption!="") ? $file->caption : ""
                     ]);
                 }
