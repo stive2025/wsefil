@@ -90,6 +90,32 @@ class ContactController extends Controller
 
     }
 
+    public function storeImport(Request $request)
+    {   
+
+        if(preg_match('/^\d{11,}$/',$request->phone_number)){
+
+            if(Contact::where('phone_number',$request->phone_number)->first()==null){
+
+                $data=[
+                    'name'=>$request->name,
+                    'phone_number'=>$request->phone_number,
+                    'profile_picture'=>$request->profile_picture,
+                    'user_id'=>$request->user_id
+                ];
+
+                $create_contact=Contact::create($data);
+
+                return true;
+
+            }else{
+
+                return false;
+                
+            }
+        }
+    }
+
     /**
      * Display the specified resource.
      */

@@ -60,6 +60,7 @@ Route::middleware('auth:sanctum')->delete('/chats/{id}',[ChatController::class,'
 Route::middleware('auth:sanctum')->get('/contacts',[ContactController::class,'index']);
 Route::middleware('auth:sanctum')->get('/contacts/chats',[ContactController::class,'indexChats']);
 Route::middleware('auth:sanctum')->get('/contacts/{id}',[ContactController::class,'show']);
+Route::post('/contacts/import',[ContactController::class,'storeImport']);
 Route::middleware('auth:sanctum')->post('/contacts',[ContactController::class,'store']);
 Route::middleware('auth:sanctum')->patch('/contacts/{id}',[ContactController::class,'update']);
 Route::middleware('auth:sanctum')->delete('/contacts/{id}',[ContactController::class,'destroy']);
