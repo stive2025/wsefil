@@ -240,7 +240,7 @@ class MessageController extends Controller
         if($request->media_type!='chat'){
             file_put_contents('files/'.$request->filename, base64_decode($request->data));
         }
-        
+
         //  Creamos el mensaje
         $data=[
             'id_message_wp'=>$request->id_message_wp,
@@ -279,7 +279,7 @@ class MessageController extends Controller
 
     public function testfiles(Request $request){
 
-        file_put_contents('files/prueba.png', base64_decode($request->data));
+        //file_put_contents('files/prueba.png', base64_decode($request->data));
 
         return [
             "status"=>true
