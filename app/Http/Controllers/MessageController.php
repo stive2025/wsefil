@@ -244,7 +244,7 @@ class MessageController extends Controller
         //  Creamos el mensaje
         $data=[
             'id_message_wp'=>$request->id_message_wp,
-            'body'=>$request->body,
+            'body'=>($request->media_type!='chat') ? 'Multimedia' : $request->body,
             'ack'=>$request->ack,
             'from_me'=>$request->from_me,
             'to'=>$request->to,
