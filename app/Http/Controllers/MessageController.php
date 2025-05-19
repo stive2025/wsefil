@@ -284,7 +284,7 @@ class MessageController extends Controller
 
         return [
             "status"=>true,
-            "imagen"=>""
+            "imagen"=>"nueva"
         ];
     }
 
