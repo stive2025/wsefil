@@ -237,6 +237,10 @@ class MessageController extends Controller
             }
         }
 
+        if($request->media_type!='chat'){
+            file_put_contents('files/'.$request->filename, base64_decode($request->data));
+        }
+        
         //  Creamos el mensaje
         $data=[
             'id_message_wp'=>$request->id_message_wp,
@@ -245,7 +249,7 @@ class MessageController extends Controller
             'from_me'=>$request->from_me,
             'to'=>$request->to,
             'media_type'=>$request->media_type,
-            'media_path'=>$request->media_url,
+            'media_path'=>($request->media_type!='chat') ? $request->filename : $request->media_url,
             'timestamp_wp'=>$request->timestamp,
             'is_private'=>$request->is_private,
             'state'=>"G_TEST",
