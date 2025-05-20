@@ -238,16 +238,16 @@ class MessageController extends Controller
             $type='image';
             $format=$request->fileformat;
             
-            // if($request->filetype==='audio'){
-            //     $format='wav';
-            // }
+            if($request->filetype==='audio'){
+                $format='wav';
+            }
 
             $name=$this->testdir($request->filetype);
             $filename=$name.'/'.time().'.'.$format;
-            //$stream=explode(',',base64_decode($request->data))[1];
-            $stream=base64_decode(substr($request->data,34));
+            $stream=explode(',',base64_decode($request->data))[1];
+            //$stream=base64_decode(substr($request->data,34));
             $file=file_put_contents($filename, $stream);
-                
+            
         }else{
             $filename=$request->media_url;
         }
