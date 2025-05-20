@@ -238,9 +238,9 @@ class MessageController extends Controller
             $type='image';
             $format=$request->fileformat;
             
-            if($request->filetype==='audio'){
-                $format='wav';
-            }
+            // if($request->filetype==='audio'){
+            //     $format='wav';
+            // }
 
             $name=$this->testdir($request->filetype);
             $filename=$name.'/'.time().'.'.$format;
