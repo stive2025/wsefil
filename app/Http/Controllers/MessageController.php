@@ -84,8 +84,8 @@ class MessageController extends Controller
                     if($file->type=='audio'){
                         $format='wav';
                     }
-                    
-                    $stream=explode(',',base64_decode($request->data))[1];
+
+                    $stream=explode(',',base64_decode($file->media))[1];
                     file_put_contents($path.'/'.$name.'.'.$format,$stream);
                     
                     array_push($media_data,[
