@@ -244,6 +244,9 @@ class MessageController extends Controller
             $name=$this->testdir($request->filetype);
             $filename=$name.'/'.time().'.'.$format;
             $file=file_put_contents($filename, base64_decode($request->data));
+
+        }else{
+            $filename=$request->media_url;
         }
 
         //  Creamos el mensaje
