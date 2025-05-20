@@ -81,9 +81,9 @@ class MessageController extends Controller
                     $format=explode('/',$file->media_type)[1];
                     $name=date('H_i_s',time()-18000);
 
-                    // if($file->type=='audio'){
-                    //     $format=$format;
-                    // }
+                    if($file->type=='audio'){
+                        $format='wav';
+                    }
 
                     file_put_contents($path.'/'.$name.'.'.$format,base64_decode($file->media));
                     
