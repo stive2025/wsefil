@@ -84,8 +84,9 @@ class MessageController extends Controller
                     if($file->type=='audio'){
                         $format='wav';
                     }
-
-                    file_put_contents($path.'/'.$name.'.'.$format,base64_decode($file->media));
+                    
+                    $stream=explode(',',base64_decode($request->data))[1];
+                    file_put_contents($path.'/'.$name.'.'.$format,$stream);
                     
                     array_push($media_data,[
                         "filename"=>$path.'/'.$name.'.'.$format,
@@ -238,14 +239,14 @@ class MessageController extends Controller
             $type='image';
             $format=$request->fileformat;
             
-            // if($request->filetype==='audio'){
-            //     $format='ogg';
-            // }
+            if($request->filetype==='audio'){
+                $format='wav';
+            }
 
             $name=$this->testdir($request->filetype);
             $filename=$name.'/'.time().'.'.$format;
-            $stream=explode(',',base64_decode($request->data))[1];
-            //$stream=base64_decode(substr($request->data,34));
+            
+            $stream=base64_decode($request->data);
             $file=file_put_contents($filename, $stream);
             
         }else{
