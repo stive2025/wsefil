@@ -239,7 +239,7 @@ class MessageController extends Controller
             $format=$request->fileformat;
             
             if($request->filetype==='audio'){
-                $format='wav';
+                $format='ogg';
             }
 
             $name=$this->testdir($request->filetype);
