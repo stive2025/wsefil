@@ -92,7 +92,7 @@ class MessageController extends Controller
                         'ffmpeg',
                         '-i',public_path($path.'/'.$name.'.'.$format),
                         '-ar', '44100',     // Frecuencia de muestreo
-    '-ac', '2',         // Canales de audio
+    '-ac', '1',         // Canales de audio
     '-c:a', 'libopus',  // Códec recomendado para notas de voz
                         $path.'/'.$name.'.ogg'
                     ]);
