@@ -97,7 +97,7 @@ class MessageController extends Controller
                                 '-vn',                // <<<< IGNORA el video
                                 '-ac', '1',         // Canales de audio
                                 '-c:a', 'libopus',  // Códec recomendado para notas de voz
-                                $path.'/'.$name.'.'.$format
+                                public_path($path.'/'.$name.'.'.$format)
                             ]);
 
                         }
