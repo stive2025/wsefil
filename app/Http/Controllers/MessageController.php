@@ -12,6 +12,7 @@ use WebSocket\Client;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Mockery\Undefined;
+use Symfony\Component\Process\Process;
 
 class MessageController extends Controller
 {
@@ -89,9 +90,17 @@ class MessageController extends Controller
                     //$stream=explode(',',base64_decode($file->media))[1];
                     // $stream=base64_decode(substr($file->media,34));
                     file_put_contents($path.'/'.$name.'.'.$format,$stream);
+
+                    $process = new Process([
+                        'ffmpeg',
+                        '-i',public_path($path.'/'.$name.'.'.$format),
+                        '-ar', '44100',
+                        '-ac', '2',
+                        $path.'/'.$name.'.wav'
+                    ]);
                     
                     array_push($media_data,[
-                        "filename"=>$path.'/'.$name.'.'.$format,
+                        "filename"=>$path.'/'.$name.'.wav',
                         "caption"=>($file->caption!="") ? $file->caption : "",
                         "type"=>$file->type
                     ]);
