@@ -116,7 +116,8 @@ class MessageController extends Controller
                         "filename"=>$path.'/'.$name.'.'.$format,
                         "caption"=>($file->caption!="") ? $file->caption : "",
                         "type"=>$file->type,
-                        "format"=>$format
+                        "format"=>$format,
+                        "campo_mnuevo"=>""
                     ]);
                 }
             }
