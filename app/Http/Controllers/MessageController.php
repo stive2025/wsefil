@@ -83,7 +83,7 @@ class MessageController extends Controller
                     $name=date('H_i_s',time()-18000);
 
                     if($file->type=='audio'){
-                        $format='webm';
+                        $format='ogg';
                     }
 
                     //$stream=base64_decode($file->media);
@@ -91,16 +91,16 @@ class MessageController extends Controller
                     // $stream=base64_decode(substr($file->media,34));
                     file_put_contents($path.'/'.$name.'.'.$format,$stream);
                     
-                    $process = new Process([
-                        'ffmpeg',
-                        '-i',public_path($path.'/'.$name.'.'.$format),
-                        '-ar', '44100',
-                        '-ac', '2',
-                        $path.'/'.$name.'.wav'
-                    ]);
+                    // $process = new Process([
+                    //     'ffmpeg',
+                    //     '-i',public_path($path.'/'.$name.'.'.$format),
+                    //     '-ar', '44100',
+                    //     '-ac', '2',
+                    //     $path.'/'.$name.'.wav'
+                    // ]);
                     
                     array_push($media_data,[
-                        "filename"=>$path.'/'.$name.'.wav',
+                        "filename"=>$path.'/'.$name.'.'.$format,
                         "caption"=>($file->caption!="") ? $file->caption : "",
                         "type"=>$file->type
                     ]);
