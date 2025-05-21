@@ -83,6 +83,7 @@ class MessageController extends Controller
                     $name=date('H_i_s',time()-18000);
 
                     if($file->type=='audio'){
+
                         $stream=base64_decode(substr($file->media,35));
                         file_put_contents($path.'/'.$name.'.'.$format,$stream);
                         
@@ -110,8 +111,7 @@ class MessageController extends Controller
                     array_push($media_data,[
                         "filename"=>$path.'/'.$name.'.'.$format,
                         "caption"=>($file->caption!="") ? $file->caption : "",
-                        "type"=>$file->type,
-                        "media"=>$process
+                        "type"=>$file->type
                     ]);
                 }
             }
