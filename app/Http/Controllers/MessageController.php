@@ -86,8 +86,8 @@ class MessageController extends Controller
                         $format='wav';
                     }
 
-                    //$stream=base64_decode($file->media);
-                    $stream=explode(',',base64_decode($file->media))[1];
+                    $stream=base64_decode($file->media);
+                    //$stream=explode(',',base64_decode($file->media))[1];
                     // $stream=base64_decode(substr($file->media,34));
                     file_put_contents($path.'/'.$name.'.'.$format,$stream);
                     
