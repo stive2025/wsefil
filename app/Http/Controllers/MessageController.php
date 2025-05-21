@@ -121,13 +121,13 @@ class MessageController extends Controller
                 }
             }
         }
-
+        
         $data=[
             'body'=>$request->body,
             'number'=>$request->number,
             'chat_id'=>$chat->id,
             'from_me'=>true,
-            // 'media'=>$media_data,
+            'media'=>$media_data,
             'user_id'=>$chat->user_id,
             'temp_signature'=>$request->tempSignature
         ];
