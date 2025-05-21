@@ -95,7 +95,7 @@ class MessageController extends Controller
                                 '-i',
                                 public_path($path.'/'.$name.'.'.$format),
                                 // '-ar', '44100',
-                                '-vn',
+                                // '-vn',
                                 '-ac', '1',
                                 '-c:a', 'libopus',
                                 public_path($path.'/'.$name.'.'.$format)
