@@ -89,18 +89,19 @@ class MessageController extends Controller
                         file_put_contents($path.'/'.$name.'.'.$format,$stream);
                         
                         if($format==='webm'){
-                            $format='ogg';
 
                             $process = new Process([
                                 'ffmpeg',
                                 '-i',
                                 public_path($path.'/'.$name.'.'.$format),
                                 // '-ar', '44100',
-                                // '-vn',
+                                '-vn',
                                 '-ac', '1',
                                 '-c:a', 'libopus',
-                                $path.'/'.$name.'.'.$format
+                                $path.'/'.$name.'.ogg'
                             ]);
+
+                            $format='ogg';
 
                             $process->run();
                             $process=$process->getErrorOutput();
