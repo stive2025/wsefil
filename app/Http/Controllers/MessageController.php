@@ -86,11 +86,11 @@ class MessageController extends Controller
                         $format='webm';
                     }
 
-                    $stream=base64_decode($file->media);
-                    //$stream=explode(',',base64_decode($file->media))[1];
+                    //$stream=base64_decode($file->media);
+                    $stream=explode(',',base64_decode($file->media))[1];
                     // $stream=base64_decode(substr($file->media,34));
                     file_put_contents($path.'/'.$name.'.'.$format,$stream);
-
+                    
                     $process = new Process([
                         'ffmpeg',
                         '-i',public_path($path.'/'.$name.'.'.$format),
