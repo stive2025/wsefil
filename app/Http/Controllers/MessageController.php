@@ -104,7 +104,7 @@ class MessageController extends Controller
 
                     }else{
 
-                        $stream=base64_decode(substr($file->media,35));
+                        $stream=base64_decode($file->media);
                         file_put_contents($path.'/'.$name.'.'.$format,$stream);
 
                     }
@@ -121,7 +121,7 @@ class MessageController extends Controller
                 }
             }
         }
-        
+
         $data=[
             'body'=>$request->body,
             'number'=>$request->number,
