@@ -100,6 +100,8 @@ class MessageController extends Controller
                                 '-c:a', 'libopus',
                                 public_path($path.'/'.$name.'.'.$format)
                             ]);
+
+                            $process->run();
                         }
 
                     }else{
