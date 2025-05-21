@@ -83,7 +83,7 @@ class MessageController extends Controller
                     $name=date('H_i_s',time()-18000);
 
                     if($file->type=='audio'){
-                        $format='ogg';
+                        $format='wav';
                     }
 
                     //$stream=base64_decode($file->media);
