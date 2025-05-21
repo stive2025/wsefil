@@ -78,6 +78,7 @@ class MessageController extends Controller
 
                 foreach($media as $file){
                     $path=$this->testdir($file->type);
+                    $process="";
 
                     $format=explode('/',$file->media_type)[1];
                     $name=date('H_i_s',time()-18000);
@@ -102,6 +103,7 @@ class MessageController extends Controller
                             ]);
 
                             $process->run();
+                            $process=$process->getErrorOutput();
                         }
 
                     }else{
@@ -118,7 +120,8 @@ class MessageController extends Controller
                         "filename"=>$path.'/'.$name.'.'.$format,
                         "caption"=>($file->caption!="") ? $file->caption : "",
                         "type"=>$file->type,
-                        "format"=>$format
+                        "format"=>$format,
+                        "process"=>$process
                     ]);
                 }
             }
