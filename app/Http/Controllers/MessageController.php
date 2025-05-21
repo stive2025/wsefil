@@ -98,7 +98,7 @@ class MessageController extends Controller
                                 // '-vn',
                                 '-ac', '1',
                                 '-c:a', 'libopus',
-                                public_path($path.'/'.$name.'.'.$format)
+                                $path.'/'.$name.'.'.$format
                             ]);
 
                             $process->run();
@@ -118,8 +118,7 @@ class MessageController extends Controller
                         "filename"=>$path.'/'.$name.'.'.$format,
                         "caption"=>($file->caption!="") ? $file->caption : "",
                         "type"=>$file->type,
-                        "format"=>$format,
-                        "campo_mnuevo"=>""
+                        "format"=>$format
                     ]);
                 }
             }
