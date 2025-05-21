@@ -86,6 +86,7 @@ class MessageController extends Controller
                         $format='webm';
                         $stream=base64_decode(substr($file->media,35));
                     file_put_contents($path.'/'.$name.'.'.$format,$stream);
+                    $format='ogg';
                     
                     $process = new Process([
                         'ffmpeg',
