@@ -86,16 +86,18 @@ class MessageController extends Controller
                         $stream=base64_decode(substr($file->media,35));
                         file_put_contents($path.'/'.$name.'.'.$format,$stream);
                         
-                        $format='ogg';
-                        
-                        $process = new Process([
-                            'ffmpeg',
-                            '-i',public_path($path.'/'.$name.'.'.$format),
-                            // '-ar', '44100',  // Frecuencia de muestreo
-                            '-ac', '1',         // Canales de audio
-                            '-c:a', 'libopus',  // Códec recomendado para notas de voz
-                            $path.'/'.$name.'.'.$format
-                        ]);
+                        if($format==='webm'){
+                            $format='ogg';
+
+                            $process = new Process([
+                                'ffmpeg',
+                                '-i',public_path($path.'/'.$name.'.'.$format),
+                                // '-ar', '44100',  // Frecuencia de muestreo
+                                '-ac', '1',         // Canales de audio
+                                '-c:a', 'libopus',  // Códec recomendado para notas de voz
+                                $path.'/'.$name.'.'.$format
+                            ]);
+                        }
 
                     }else{
                         $stream=base64_decode(substr($file->media,35));
@@ -104,7 +106,6 @@ class MessageController extends Controller
 
                     //$stream=base64_decode($file->media);
                     //$stream=explode(',',base64_decode($file->media))[1];
-                    
                     
                     array_push($media_data,[
                         "filename"=>$path.'/'.$name.'.'.$format,
