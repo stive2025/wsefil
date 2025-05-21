@@ -84,11 +84,7 @@ class MessageController extends Controller
 
                     if($file->type=='audio'){
                         $format='webm';
-                    }
-
-                    //$stream=base64_decode($file->media);
-                    //$stream=explode(',',base64_decode($file->media))[1];
-                    $stream=base64_decode(substr($file->media,35));
+                        $stream=base64_decode(substr($file->media,35));
                     file_put_contents($path.'/'.$name.'.'.$format,$stream);
                     
                     $process = new Process([
@@ -98,6 +94,14 @@ class MessageController extends Controller
                         '-ac', '2',
                         $path.'/'.$name.'.ogg'
                     ]);
+                    }
+
+                    $stream=base64_decode(substr($file->media,35));
+                    file_put_contents($path.'/'.$name.'.'.$format,$stream);
+
+                    //$stream=base64_decode($file->media);
+                    //$stream=explode(',',base64_decode($file->media))[1];
+                    
                     
                     array_push($media_data,[
                         "filename"=>$path.'/'.$name.'.'.$format,
