@@ -98,11 +98,14 @@ class MessageController extends Controller
                                 '-c:a', 'libopus',  // Códec recomendado para notas de voz
                                 $path.'/'.$name.'.'.$format
                             ]);
+
                         }
 
                     }else{
+
                         $stream=base64_decode(substr($file->media,35));
                         file_put_contents($path.'/'.$name.'.'.$format,$stream);
+
                     }
 
                     //$stream=base64_decode($file->media);
@@ -111,7 +114,8 @@ class MessageController extends Controller
                     array_push($media_data,[
                         "filename"=>$path.'/'.$name.'.'.$format,
                         "caption"=>($file->caption!="") ? $file->caption : "",
-                        "type"=>$file->type
+                        "type"=>$file->type,
+                        "format"=>$format
                     ]);
                 }
             }
