@@ -94,6 +94,7 @@ class MessageController extends Controller
                                 'ffmpeg',
                                 '-i',public_path($path.'/'.$name.'.'.$format),
                                 // '-ar', '44100',  // Frecuencia de muestreo
+                                '-vn',                // <<<< IGNORA el video
                                 '-ac', '1',         // Canales de audio
                                 '-c:a', 'libopus',  // Códec recomendado para notas de voz
                                 $path.'/'.$name.'.'.$format
@@ -126,7 +127,7 @@ class MessageController extends Controller
             'number'=>$request->number,
             'chat_id'=>$chat->id,
             'from_me'=>true,
-            'media'=>$media_data,
+            // 'media'=>$media_data,
             'user_id'=>$chat->user_id,
             'temp_signature'=>$request->tempSignature
         ];
