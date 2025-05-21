@@ -92,14 +92,14 @@ class MessageController extends Controller
 
                             $process = new Process([
                                 'ffmpeg',
-                                '-i',public_path($path.'/'.$name.'.'.$format),
-                                // '-ar', '44100',  // Frecuencia de muestreo
-                                '-vn',                // <<<< IGNORA el video
-                                '-ac', '1',         // Canales de audio
-                                '-c:a', 'libopus',  // Códec recomendado para notas de voz
+                                '-i',
+                                public_path($path.'/'.$name.'.'.$format),
+                                // '-ar', '44100',
+                                '-vn',
+                                '-ac', '1',
+                                '-c:a', 'libopus',
                                 public_path($path.'/'.$name.'.'.$format)
                             ]);
-
                         }
 
                     }else{
