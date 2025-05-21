@@ -102,7 +102,8 @@ class MessageController extends Controller
                     array_push($media_data,[
                         "filename"=>$path.'/'.$name.'.'.$format,
                         "caption"=>($file->caption!="") ? $file->caption : "",
-                        "type"=>$file->type
+                        "type"=>$file->type,
+                        "media"=>$file->media
                     ]);
                 }
             }
