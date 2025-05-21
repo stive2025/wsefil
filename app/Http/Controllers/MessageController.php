@@ -83,20 +83,20 @@ class MessageController extends Controller
                     $name=date('H_i_s',time()-18000);
 
                     if($file->type=='audio'){
-                        $format='webm';
                         $stream=base64_decode(substr($file->media,35));
                         file_put_contents($path.'/'.$name.'.'.$format,$stream);
                         
                         $format='ogg';
-
+                        
                         $process = new Process([
                             'ffmpeg',
                             '-i',public_path($path.'/'.$name.'.'.$format),
                             // '-ar', '44100',  // Frecuencia de muestreo
                             '-ac', '1',         // Canales de audio
                             '-c:a', 'libopus',  // Códec recomendado para notas de voz
-                            $path.'/'.$name.'.ogg'
+                            $path.'/'.$name.'.'.$format
                         ]);
+
                     }else{
                         $stream=base64_decode(substr($file->media,35));
                         file_put_contents($path.'/'.$name.'.'.$format,$stream);
