@@ -85,21 +85,22 @@ class MessageController extends Controller
                     if($file->type=='audio'){
                         $format='webm';
                         $stream=base64_decode(substr($file->media,35));
-                    file_put_contents($path.'/'.$name.'.'.$format,$stream);
-                    $format='ogg';
+                        file_put_contents($path.'/'.$name.'.'.$format,$stream);
+                        
+                        $format='ogg';
 
-                    $process = new Process([
-                        'ffmpeg',
-                        '-i',public_path($path.'/'.$name.'.'.$format),
-                        // '-ar', '44100',     // Frecuencia de muestreo
-    '-ac', '1',         // Canales de audio
-    '-c:a', 'libopus',  // Códec recomendado para notas de voz
-                        $path.'/'.$name.'.ogg'
-                    ]);
+                        $process = new Process([
+                            'ffmpeg',
+                            '-i',public_path($path.'/'.$name.'.'.$format),
+                            // '-ar', '44100',  // Frecuencia de muestreo
+                            '-ac', '1',         // Canales de audio
+                            '-c:a', 'libopus',  // Códec recomendado para notas de voz
+                            $path.'/'.$name.'.ogg'
+                        ]);
+                    }else{
+                        $stream=base64_decode(substr($file->media,35));
+                        file_put_contents($path.'/'.$name.'.'.$format,$stream);
                     }
-
-                    $stream=base64_decode(substr($file->media,35));
-                    file_put_contents($path.'/'.$name.'.'.$format,$stream);
 
                     //$stream=base64_decode($file->media);
                     //$stream=explode(',',base64_decode($file->media))[1];
