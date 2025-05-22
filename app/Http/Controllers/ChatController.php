@@ -86,7 +86,7 @@ class ChatController extends Controller
     public function show(Chat $id)
     {
         $chat=$id;
-        $chat->messages=$chat->find($id->id)->messages;
+        $chat->messages=$chat->find($id->id)->messages->paginate(10);
         
         return $chat;
     }
