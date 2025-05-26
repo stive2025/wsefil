@@ -40,7 +40,7 @@ class ChatController extends Controller
                 }
             })
             ->when(request()->filled('phone'),function($query){
-                $contact=Contact::where('phone','REGEXP',request('phone'))->first();
+                $contact=Contact::where('phone_number','REGEXP',request('phone'))->first();
                 
                 if($contact!==null){
                     $query->where('contact_id',$contact->id);
