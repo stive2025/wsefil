@@ -93,6 +93,7 @@ class ChatController extends Controller
             $chat->ack=$chat->find($chat->id)->messages()->orderby('id','DESC')->first()->ack;
             $chat->by_user=User::where('id',$chat->user_id)->first()->name;
             $chat->from_me=$chat->find($chat->id)->messages()->orderby('id','DESC')->first()->from_me;
+            $chat->contact_name=Contact::where('id',$chat->contact_id)->first()->name;
         }
         
         return $chats;
