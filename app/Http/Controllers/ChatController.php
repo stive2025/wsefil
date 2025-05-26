@@ -31,12 +31,28 @@ class ChatController extends Controller
             ->when(request()->filled('tag_id'),function($query){
                 $query->where('tag_id',request('tag_id'));
             })
+            ->when(request()->filled('name'),function($query){
+                //$query->where('tag_id',request('tag_id'));
+                $contact=Contact::where('name','REGEXP',request('name'))->first();
+                
+                if($contact!==null){
+                    $query->where('contact_id',$contact->id);
+                }
+            })
+            ->when(request()->filled('phone'),function($query){
+                $contact=Contact::where('phone','REGEXP',request('phone'))->first();
+                
+                if($contact!==null){
+                    $query->where('contact_id',$contact->id);
+                }
+            })
             ->when(request()->filled('contact_id'),function($query){
                 
             })
                 //->where('user_id',Auth::user()->id)
                 ->orderBy('updated_at','DESC')
                 ->paginate(7);
+
         }else{
             $chats=Chat::when(request()->filled('state'),function($query){
                 $query->where('state',request('state'));
@@ -49,6 +65,21 @@ class ChatController extends Controller
             })
             ->when(request()->filled('tag_id'),function($query){
                 $query->where('tag_id',request('tag_id'));
+            })
+            ->when(request()->filled('name'),function($query){
+                //$query->where('tag_id',request('tag_id'));
+                $contact=Contact::where('name','REGEXP',request('name'))->first();
+                
+                if($contact!==null){
+                    $query->where('contact_id',$contact->id);
+                }
+            })
+            ->when(request()->filled('phone'),function($query){
+                $contact=Contact::where('phone','REGEXP',request('phone'))->first();
+                
+                if($contact!==null){
+                    $query->where('contact_id',$contact->id);
+                }
             })
             ->when(request()->filled('contact_id'),function($query){
                 
