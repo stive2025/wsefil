@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Chat;
 use App\Models\Contact;
 use App\Models\Message;
+use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -57,9 +58,9 @@ class ChatController extends Controller
                 ->paginate(7);
         }
 
-        
         foreach($chats as $chat){
             $chat->ack=$chat->find($chat->id)->messages()->orderby('id','DESC')->first()->ack;
+            $chat->by_user=User::where('id',$chat->user_id)->first()->name;
             $chat->from_me=$chat->find($chat->id)->messages()->orderby('id','DESC')->first()->from_me;
         }
         
