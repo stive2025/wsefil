@@ -85,7 +85,7 @@ class MessageController extends Controller
 
                     if($file->type=='audio'){
 
-                        $stream=base64_decode(substr($file->media,35));
+                        $stream=base64_decode(explode(',',$file->media)[1]);
                         file_put_contents($path.'/'.$name.'.'.$format,$stream);
                         
                         if($format==='webm'){
@@ -109,7 +109,7 @@ class MessageController extends Controller
 
                     }else{
 
-                        $stream=base64_decode($file->media);
+                        $stream=base64_decode(explode(',',$file->media)[1]);
                         file_put_contents($path.'/'.$name.'.'.$format,$stream);
 
                     }
