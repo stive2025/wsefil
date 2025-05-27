@@ -90,8 +90,8 @@ class ChatController extends Controller
         }
 
         foreach($chats as $chat){
-
-            $contact=Contact::where('id',$chat->contact_id)->first();
+            try {
+                $contact=Contact::where('id',$chat->contact_id)->first();
 
             $chat->ack=$chat->find($chat->id)->messages()->orderby('id','DESC')->first()->ack;
             $chat->by_user=User::where('id',$chat->user_id)->first()->name;
@@ -99,6 +99,17 @@ class ChatController extends Controller
             $chat->contact_name=$contact->name;
             $chat->contact_phone=$contact->phone_number;
             $chat->contact_picture=$contact->profile_picture;
+            } catch (\Exception $th) {
+                // $contact=Contact::where('id',$chat->contact_id)->first();
+
+                $chat->ack="";
+                $chat->by_user=User::where('id',$chat->user_id)->first()->name;
+                $chat->from_me=$chat->find($chat->id)->messages()->orderby('id','DESC')->first()->from_me;
+                $chat->contact_name=$contact->name;
+                $chat->contact_phone=$contact->phone_number;
+                $chat->contact_picture=$contact->profile_picture;
+            }
+            
         }   
         
         return $chats;
