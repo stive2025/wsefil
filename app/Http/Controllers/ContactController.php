@@ -40,8 +40,14 @@ class ContactController extends Controller
             ->paginate(7);
 
         foreach($contacts as $contact){
-            $contact->chat=$contact->find($contact->id)->chats()->first();
-            $contact->chat->ack=$contact->chat->find($contact->chat->id)->messages()->orderby('id','DESC')->first()->ack;
+
+            try {
+                $contact->chat=$contact->find($contact->id)->chats()->first();
+                $contact->chat->ack=$contact->chat->find($contact->chat->id)->messages()->orderby('id','DESC')->first()->ack;   
+            } catch (\Throwable $th) {
+                $contact->chat=[];
+                // $contact->chat->ack="";
+            }
         }
         
         return $contacts;
