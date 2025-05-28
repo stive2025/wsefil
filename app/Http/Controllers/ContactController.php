@@ -48,6 +48,7 @@ class ContactController extends Controller
                 $contact->chat=[];
                 // $contact->chat->ack="";
             }
+
         }
         
         return $contacts;
@@ -83,7 +84,7 @@ class ContactController extends Controller
                 return response()->json([
                     "status"=>400,
                     "message"=>"Contacto ya existe."
-                ],400);
+                ],200);
                 
             }
 
