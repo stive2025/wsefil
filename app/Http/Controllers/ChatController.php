@@ -33,17 +33,28 @@ class ChatController extends Controller
             })
             ->when(request()->filled('name'),function($query){
                 //$query->where('tag_id',request('tag_id'));
-                $contact=Contact::where('name','REGEXP',request('name'))->first();
-                
-                if($contact!==null){
-                    $query->where('contact_id',$contact->id);
+                $contacts=Contact::where('name','REGEXP',request('name'))->get();
+                $contact_ids=[];
+
+                foreach($contacts as $contact){
+                    array_push($contact_ids,$contact->id);
+                }
+
+                if(count($contact_ids)>0){
+                    $query->whereIn('contact_id',$contact_ids);
                 }
             })
             ->when(request()->filled('phone'),function($query){
-                $contact=Contact::where('phone_number','REGEXP',request('phone'))->first();
+                $contacts=Contact::where('phone_number','REGEXP',request('phone'))->get();
                 
-                if($contact!==null){
-                    $query->where('contact_id',$contact->id);
+                $contact_ids=[];
+
+                foreach($contacts as $contact){
+                    array_push($contact_ids,$contact->id);
+                }
+                
+                if(count($contact_ids)>0){
+                    $query->whereIn('contact_id',$contact_ids);
                 }
             })
             ->when(request()->filled('contact_id'),function($query){
@@ -87,7 +98,7 @@ class ChatController extends Controller
                 foreach($contacts as $contact){
                     array_push($contact_ids,$contact->id);
                 }
-                
+
                 if(count($contact_ids)>0){
                     $query->whereIn('contact_id',$contact_ids);
                 }
