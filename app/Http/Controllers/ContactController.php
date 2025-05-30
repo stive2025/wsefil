@@ -37,6 +37,7 @@ class ContactController extends Controller
             ->when(request()->filled('id'),function($query){
                 $query->where('id',request('id'));
             })
+            ->where('user_id',Auth::user()->id)
             ->paginate(7);
 
         foreach($contacts as $contact){
@@ -77,7 +78,7 @@ class ContactController extends Controller
                     "status"=>200,
                     "message"=>"Contacto creado correctamente.",
                     "data"=>$create_contact
-                ],200);
+                ],400);
 
             }else{
 
