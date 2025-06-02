@@ -8,6 +8,7 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
 use App\Services\ApiCollecta;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -58,15 +59,48 @@ Route::middleware('auth:sanctum')->delete('/chats/{id}',[ChatController::class,'
  * ================================> EndPoints para Contactos
  */
 
-Route::get('/prueba',function(){
-    return [
-        "data"=>"HOLA"
-    ];
+Route::get('/contacts/assign',function(ApiCollecta $service){
+    $contactos=$service->obtenerAsignacion();
+    $contacts_assign=[];
+
+    foreach($contactos as $contacto){
+        $exists=DB::table('contacts')->where('phone_number',$contacto['phone'])->first();
+
+        if($exists!=null){
+            $user_id=$contacto['user_id'];
+
+            if($contacto['user_id']==9 | $contacto['user_id']==17){
+                $user_id=46;
+            }else if($contacto['user_id']==19 | $contacto['user_id']==15 | $contacto['user_id']==2){
+                $user_id=45;
+            }else if($contacto['user_id']==14){
+                $user_id=47;
+            }else if($contacto['user_id']==16){
+                $user_id=49;
+            }else if($contacto['user_id']==18){
+                $user_id=48;
+            }
+
+            DB::table('contacts')->where('phone_number',$contacto['phone'])->update([
+                "user_id"=>$user_id
+            ]);
+
+            DB::table('chats')->where('contact_id',$exists->id)->update([
+                "user_id"=>$user_id
+            ]);
+
+            array_push($contacts_assign,$exists);
+        }
+    }
+
+    return $contacts_assign;
 });
-Route::middleware('auth:sanctum')->get('/contactsindex',[ContactController::class,'index']);
+
+Route::middleware('auth:sanctum')->get('/contacts',[ContactController::class,'index']);
 Route::middleware('auth:sanctum')->get('/contacts/chats',[ContactController::class,'indexChats']);
 Route::middleware('auth:sanctum')->get('/contacts/{id}',[ContactController::class,'show']);
 Route::post('/contacts/import',[ContactController::class,'storeImport']);
+
 Route::middleware('auth:sanctum')->post('/contacts',[ContactController::class,'store']);
 Route::middleware('auth:sanctum')->patch('/contacts/{id}',[ContactController::class,'update']);
 Route::middleware('auth:sanctum')->delete('/contacts/{id}',[ContactController::class,'destroy']);
