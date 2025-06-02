@@ -58,7 +58,7 @@ Route::middleware('auth:sanctum')->delete('/chats/{id}',[ChatController::class,'
  * ================================> EndPoints para Contactos
  */
 
-Route::get('/contacts/assign',function(){
+Route::get('/prueba',function(){
     return [
         "data"=>"HOLA"
     ];
