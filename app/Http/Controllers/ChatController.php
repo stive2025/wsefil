@@ -94,7 +94,7 @@ class ChatController extends Controller
                 $contacts=Contact::where('phone_number','REGEXP',request('phone'))->get();
                 
                 $contact_ids=[];
-
+                
                 foreach($contacts as $contact){
                     array_push($contact_ids,$contact->id);
                 }
