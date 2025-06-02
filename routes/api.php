@@ -7,6 +7,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
+use App\Services\ApiCollecta;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -61,6 +62,11 @@ Route::middleware('auth:sanctum')->get('/contacts',[ContactController::class,'in
 Route::middleware('auth:sanctum')->get('/contacts/chats',[ContactController::class,'indexChats']);
 Route::middleware('auth:sanctum')->get('/contacts/{id}',[ContactController::class,'show']);
 Route::post('/contacts/import',[ContactController::class,'storeImport']);
+
+Route::post('/contacts/assign',function(ApiCollecta $service){
+    return $service->obtenerAsignacion();
+});
+
 Route::middleware('auth:sanctum')->post('/contacts',[ContactController::class,'store']);
 Route::middleware('auth:sanctum')->patch('/contacts/{id}',[ContactController::class,'update']);
 Route::middleware('auth:sanctum')->delete('/contacts/{id}',[ContactController::class,'destroy']);
