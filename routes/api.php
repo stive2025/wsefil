@@ -90,7 +90,6 @@ Route::get('/contacts/assign',function(ApiCollecta $service){
             ]);
 
             array_push($contacts_assign,$exists);
-            
         }
     }
 
