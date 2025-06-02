@@ -63,8 +63,10 @@ Route::middleware('auth:sanctum')->get('/contacts/chats',[ContactController::cla
 Route::middleware('auth:sanctum')->get('/contacts/{id}',[ContactController::class,'show']);
 Route::post('/contacts/import',[ContactController::class,'storeImport']);
 
-Route::get('/contacts/assign',function(ApiCollecta $service){
-    return $service->obtenerAsignacion();
+Route::get('/contacts/assign',function(){
+    return [
+        "data"=>"HOLA"
+    ];
 });
 
 Route::middleware('auth:sanctum')->post('/contacts',[ContactController::class,'store']);
