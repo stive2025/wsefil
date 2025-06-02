@@ -63,7 +63,7 @@ Route::get('/prueba',function(){
         "data"=>"HOLA"
     ];
 });
-Route::middleware('auth:sanctum')->get('/contacts',[ContactController::class,'index']);
+Route::middleware('auth:sanctum')->get('/contactsindex',[ContactController::class,'index']);
 Route::middleware('auth:sanctum')->get('/contacts/chats',[ContactController::class,'indexChats']);
 Route::middleware('auth:sanctum')->get('/contacts/{id}',[ContactController::class,'show']);
 Route::post('/contacts/import',[ContactController::class,'storeImport']);
