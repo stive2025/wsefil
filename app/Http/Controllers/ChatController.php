@@ -94,7 +94,7 @@ class ChatController extends Controller
                 $contacts=Contact::where('phone_number','REGEXP',request('phone'))->get();
                 
                 $contact_ids=[];
-                
+
                 foreach($contacts as $contact){
                     array_push($contact_ids,$contact->id);
                 }
@@ -114,16 +114,13 @@ class ChatController extends Controller
         foreach($chats as $chat){
             try {
                 $contact=Contact::where('id',$chat->contact_id)->first();
-
-            $chat->ack=$chat->find($chat->id)->messages()->orderby('id','DESC')->first()->ack;
-            $chat->by_user=User::where('id',$chat->user_id)->first()->name;
-            $chat->from_me=$chat->find($chat->id)->messages()->orderby('id','DESC')->first()->from_me;
-            $chat->contact_name=$contact->name;
-            $chat->contact_phone=$contact->phone_number;
-            $chat->contact_picture=$contact->profile_picture;
+                $chat->ack=$chat->find($chat->id)->messages()->orderby('id','DESC')->first()->ack;
+                $chat->by_user=User::where('id',$chat->user_id)->first()->name;
+                $chat->from_me=$chat->find($chat->id)->messages()->orderby('id','DESC')->first()->from_me;
+                $chat->contact_name=$contact->name;
+                $chat->contact_phone=$contact->phone_number;
+                $chat->contact_picture=$contact->profile_picture;
             } catch (\Exception $th) {
-                // $contact=Contact::where('id',$chat->contact_id)->first();
-
                 $chat->ack="";
                 $chat->by_user=User::where('id',$chat->user_id)->first()->name;
                 $chat->from_me="";
