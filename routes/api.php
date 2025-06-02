@@ -80,7 +80,7 @@ Route::get('/contacts/assign',function(ApiCollecta $service){
             }else if($contacto['user_id']==18){
                 $user_id=48;
             }
-            
+
             DB::table('contacts')->where('phone_number',$contacto['phone'])->update([
                 "user_id"=>$user_id
             ]);
@@ -90,6 +90,7 @@ Route::get('/contacts/assign',function(ApiCollecta $service){
             ]);
 
             array_push($contacts_assign,$exists);
+            
         }
     }
 
