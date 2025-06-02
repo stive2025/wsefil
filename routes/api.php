@@ -67,7 +67,6 @@ Route::get('/contacts/assign',function(ApiCollecta $service){
     return $service->obtenerAsignacion();
 });
 
-
 Route::middleware('auth:sanctum')->post('/contacts',[ContactController::class,'store']);
 Route::middleware('auth:sanctum')->patch('/contacts/{id}',[ContactController::class,'update']);
 Route::middleware('auth:sanctum')->delete('/contacts/{id}',[ContactController::class,'destroy']);
