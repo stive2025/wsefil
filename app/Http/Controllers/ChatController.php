@@ -154,7 +154,13 @@ class ChatController extends Controller
     public function show(Chat $id)
     {
         $chat=$id;
-        $chat->messages=$chat->find($id->id)->messages()->orderBy('id','DESC')->paginate(10);
+        $messages=$chat->find($id->id)->messages()->orderBy('id','DESC')->paginate(10);
+
+        foreach($messages as $message){
+            $message->created_by=User::where('id',$message->created_by)->first()->name;
+        }
+
+        $chat->messages=$messages;
             
         return $chat;
     }
