@@ -13,7 +13,9 @@ class Contact extends Model
         'name',
         'phone_number',
         'profile_picture',
-        'user_id'
+        'user_id',
+        'count_edits',
+        'sync_id'
     ];
 
     public function folks(){
