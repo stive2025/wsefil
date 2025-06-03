@@ -79,7 +79,7 @@ class ContactController extends Controller
                     "status"=>200,
                     "message"=>"Contacto creado correctamente.",
                     "data"=>$create_contact
-                ],400);
+                ],200);
 
             }else{
 
@@ -94,7 +94,7 @@ class ContactController extends Controller
             return response()->json([
                 "status"=>400,
                 "message"=>"Contacto no cumple formato para un número de whatsapp."
-            ],400);
+            ],200);
         }
 
     }
