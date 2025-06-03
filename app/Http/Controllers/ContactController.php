@@ -140,13 +140,24 @@ class ContactController extends Controller
      */
     public function update(Request $request, Contact $id)
     {
-        $id->update($request->all());
-        
-        return response()->json([
-            "status"=>200,
-            "message"=>"Contacto actualizado correctamente.",
-            "data"=>$id
-        ],200);
+        if($id->count_edits>0){
+            
+            return response()->json([
+                "status"=>400,
+                "message"=>"Contacto ya ha sido actualizado."
+            ],200);
+
+        }else{
+
+            $id->update($request->all());
+            
+            return response()->json([
+                "status"=>200,
+                "message"=>"Contacto actualizado correctamente.",
+                "data"=>$id
+            ],200);
+
+        }
     }
 
     /**
