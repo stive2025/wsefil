@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Chat;
 use App\Models\Contact;
 use App\Models\Message;
+use App\Models\Tag;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
@@ -113,20 +114,28 @@ class ChatController extends Controller
 
         foreach($chats as $chat){
             try {
+                
                 $contact=Contact::where('id',$chat->contact_id)->first();
                 $chat->ack=$chat->find($chat->id)->messages()->orderby('id','DESC')->first()->ack;
                 $chat->by_user=User::where('id',$chat->user_id)->first()->name;
                 $chat->from_me=$chat->find($chat->id)->messages()->orderby('id','DESC')->first()->from_me;
+                $chat->tag_name=($chat->tag_id!=null) ? Tag::where('id',$chat->tag_id)->first()->name : "";
+                $chat->tag_color=($chat->tag_id!=null) ? Tag::where('id',$chat->tag_id)->first()->color : "";
                 $chat->contact_name=$contact->name;
                 $chat->contact_phone=$contact->phone_number;
                 $chat->contact_picture=$contact->profile_picture;
+
             } catch (\Exception $th) {
+
                 $chat->ack="";
                 $chat->by_user=User::where('id',$chat->user_id)->first()->name;
                 $chat->from_me="";
                 $chat->contact_name=$contact->name;
+                $chat->tag_name=($chat->tag_id!=null) ? Tag::where('id',$chat->tag_id)->first()->name : "";
+                $chat->tag_color=($chat->tag_id!=null) ? Tag::where('id',$chat->tag_id)->first()->color : "";
                 $chat->contact_phone=$contact->phone_number;
                 $chat->contact_picture=$contact->profile_picture;
+
             }
             
         }   

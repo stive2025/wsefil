@@ -129,12 +129,12 @@ class ContactController extends Controller
 
     /**
      * Display the specified resource.
-     */
+    */
     public function show(Contact $id)
     {
         return $id;
     }
-
+    
     /**
      * Update the specified resource in storage.
      */
