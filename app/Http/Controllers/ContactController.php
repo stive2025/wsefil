@@ -71,7 +71,8 @@ class ContactController extends Controller
                     'phone_number'=>$request->phone_number,
                     'profile_picture'=>$request->profile_picture,
                     'user_id'=>Auth::user()->id,
-                    'sync_id'=>$request->sync_id
+                    'sync_id'=>$request->sync_id,
+                    'count_edits'=>0
                 ];
 
                 $create_contact=Contact::create($data);
