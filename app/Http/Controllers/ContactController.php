@@ -70,7 +70,8 @@ class ContactController extends Controller
                     'name'=>$request->name,
                     'phone_number'=>$request->phone_number,
                     'profile_picture'=>$request->profile_picture,
-                    'user_id'=>Auth::user()->id
+                    'user_id'=>Auth::user()->id,
+                    'sync_id'=>$request->sync_id
                 ];
 
                 $create_contact=Contact::create($data);
