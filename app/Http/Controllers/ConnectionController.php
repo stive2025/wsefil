@@ -12,7 +12,10 @@ class ConnectionController extends Controller
      */
     public function index()
     {
-        $connections=Connection::get();
+        $connections=Connection::when(request()->filled('number'),function ($query){
+                $query->where('number',request('number'));
+            })
+            ->get();
 
         return response()->json([
             "status"=>200,

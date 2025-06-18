@@ -247,7 +247,7 @@ class MessageController extends Controller
                     'name'=>$request->notify_name,
                     'phone_number'=>$request->number,
                     'profile_picture'=>"",
-                    'user_id'=>User::where('role',2)->first()->id
+                    'user_id'=>Connection::where('number',$request->to)->first()->user_id
                 ]);
                 
                 $contact_id=$create_contact->id;
@@ -257,11 +257,11 @@ class MessageController extends Controller
                     'last_message'=>($request->media_type=="chat") ? $request->body : "Multimedia",
                     'unread_message'=>1,
                     'contact_id'=>$contact_id,
-                    'user_id'=>User::where('role',2)->first()->id
+                    'user_id'=>Connection::where('number',$request->to)->first()->user_id
                 ]);
-    
+                
                 $chat_id=$create_chat->id;
-                $user_id=User::where('role',2)->first()->id;
+                $user_id=Connection::where('number',$request->to)->first()->user_id;
             }
         }
 
@@ -284,6 +284,10 @@ class MessageController extends Controller
             $filename=$request->media_url;
         }
 
+        if(!$request->from_me){
+            $user_id=Connection::where('number',$request->to)->first()->user_id;
+        }
+
         //  Creamos el mensaje
         $data=[
             'id_message_wp'=>$request->id_message_wp,
@@ -302,7 +306,7 @@ class MessageController extends Controller
         ];
 
         $create_message=Message::create($data);
-
+        
         return response()->json([
             "status"=>200,
             "message"=>"Mensaje creado correctamente.",
