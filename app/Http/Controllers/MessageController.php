@@ -323,8 +323,9 @@ class MessageController extends Controller
     public function show(Message $id)
     {
         return response()->json([
-            "data"=>$id
-        ]);
+            "data"=>$id,
+            "status"=>200
+        ],200);
     }
 
     public function testfiles(Request $request){
