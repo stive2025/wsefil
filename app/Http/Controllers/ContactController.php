@@ -13,11 +13,19 @@ class ContactController extends Controller
      */
     public function index()
     {
-        $contactos=Contact::when(request()->filled('name'),function($query){
-            $query->where('name','REGEXP',request('name'));
-        })
-            ->where('user_id',Auth::user()->id)
-            ->paginate(7);
+
+        if(Auth::user()->tokenCan('chats.filter.agent')){
+            $contactos=Contact::when(request()->filled('name'),function($query){
+                $query->where('name','REGEXP',request('name'));
+            })
+                ->paginate(7);
+        }else{
+            $contactos=Contact::when(request()->filled('name'),function($query){
+                $query->where('name','REGEXP',request('name'));
+            })
+                ->where('user_id',Auth::user()->id)
+                ->paginate(7);
+        }
 
         foreach($contactos as $contacto){
             $contacto->chat=$contacto->find($contacto->id)->chats()->first();
