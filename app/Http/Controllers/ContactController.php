@@ -31,6 +31,7 @@ class ContactController extends Controller
             $contacto->chat=$contacto->find($contacto->id)->chats()->first();
         }
 
+        
         return $contactos;
     }
     
