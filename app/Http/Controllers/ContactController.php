@@ -31,13 +31,26 @@ class ContactController extends Controller
             $contacto->chat=$contacto->find($contacto->id)->chats()->first();
         }
 
-        
+
         return $contactos;
     }
     
     public function indexChats(Request $request)
     {
-        $contacts=Contact::when(request()->filled('name'),function($query){
+
+        if(Auth::user()->tokenCan('chats.filter.agent')){
+            $contacts=Contact::when(request()->filled('name'),function($query){
+                $query->where('name','REGEXP',request('name'));
+            })
+            ->when(request()->filled('phone'),function($query){
+                $query->where('phone_number','REGEXP',request('phone'));
+            })
+            ->when(request()->filled('id'),function($query){
+                $query->where('id',request('id'));
+            })
+            ->paginate(7);
+        }else{
+            $contacts=Contact::when(request()->filled('name'),function($query){
                 $query->where('name','REGEXP',request('name'));
             })
             ->when(request()->filled('phone'),function($query){
@@ -48,6 +61,7 @@ class ContactController extends Controller
             })
             ->where('user_id',Auth::user()->id)
             ->paginate(7);
+        }
 
         foreach($contacts as $contact){
 
