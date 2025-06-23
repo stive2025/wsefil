@@ -76,7 +76,6 @@ class ContactController extends Controller
         }
 
         return $contacts;
-
     }
 
     /**
