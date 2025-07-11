@@ -291,6 +291,7 @@ class ChatController extends Controller
             ->update([
                 "user_id"=>$request->to
             ]);
+            
 
         return response()->json([
             "status"=>200,
