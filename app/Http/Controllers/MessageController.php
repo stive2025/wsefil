@@ -27,7 +27,6 @@ class MessageController extends Controller
     /**
      * Store a newly created resource in storage.
     */
-
     public function push($data){
         try {
     
@@ -39,7 +38,6 @@ class MessageController extends Controller
             return $e;
         }
     }
-
     public function connectmessage(Request $request){
 
         if(request()->filled('chat_id')){

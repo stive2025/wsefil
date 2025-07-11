@@ -246,12 +246,14 @@ class ChatController extends Controller
         ],200);
     }
 
-    public function transfer(Request $request, Chat $id)
+    public function transfer(Request $request, string $id)
     {
         //  Revisamos si hay mensaje privado
         $last_message="";
 
-        if(request()->filled('is_private')){
+        $id=Chat::where('id',$id)->first();
+
+        if(request()->filled('is_private') & $id!=null){
             if(request('is_private')==true){
                 $data=[
                     'id_message_wp'=>"",
@@ -276,13 +278,15 @@ class ChatController extends Controller
             }
         }
 
-        Chat::where('id',$id->id)
-            ->update([
-                "last_message"=>$last_message,
-                'unread_message'=>intval($id->unread_message)+1,
-                "user_id"=>$request->to
-            ]);
-            
+        if($id!=null){
+            Chat::where('id',$id->id)
+                ->update([
+                    "last_message"=>$last_message,
+                    'unread_message'=>intval($id->unread_message)+1,
+                    "user_id"=>$request->to
+                ]);
+        }
+        
         Contact::where('id',$id->contact_id)
             ->update([
                 "user_id"=>$request->to
