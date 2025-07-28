@@ -44,7 +44,6 @@ class ContactController extends Controller
                 ->when(request()->filled('phone'),function($query){
                     $query->where('phone_number','REGEXP',request('phone'));
                 })
-                ->where('user_id',Auth::user()->id)
                 ->paginate(7);
             
             if(count($contactos)>0){
