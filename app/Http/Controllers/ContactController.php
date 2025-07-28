@@ -13,24 +13,55 @@ class ContactController extends Controller
      */
     public function index()
     {
+        $exist=false;
+        $is_assign=false;
 
         if(Auth::user()->tokenCan('chats.filter.agent')){
             $contactos=Contact::when(request()->filled('name'),function($query){
-                $query->where('name','REGEXP',request('name'));
-            })
+                    $query->where('name','REGEXP',request('name'));
+                })
+                ->when(request()->filled('phone'),function($query){
+                    $query->where('phone','REGEXP',request('phone'));
+                })
                 ->paginate(7);
+            
+            if(count($contactos)>0){
+                $exits=true;
+                $is_assign=true;
+            }
+
+            foreach($contactos as $contacto){
+                $chat=$contacto->find($contacto->id)->chats()->first();
+                $contacto->chat=$chat;
+                $contacto->exist=$exist;
+                $contacto->is_assign=$is_assign;
+            }
+
         }else{
             $contactos=Contact::when(request()->filled('name'),function($query){
-                $query->where('name','REGEXP',request('name'));
-            })
+                    $query->where('name','REGEXP',request('name'));
+                })
+                ->when(request()->filled('phone'),function($query){
+                    $query->where('phone','REGEXP',request('phone'));
+                })
                 ->where('user_id',Auth::user()->id)
                 ->paginate(7);
-        }
+            
+            if(count($contactos)>0){
+                $exits=true;
+            }
 
-        foreach($contactos as $contacto){
-            $contacto->chat=$contacto->find($contacto->id)->chats()->first();
-        }
+            foreach($contactos as $contacto){
+                if($contacto->user_id==Auth::user()->id){
+                    $is_assign=true;
+                }
 
+                $chat=$contacto->find($contacto->id)->chats()->first();
+                $contacto->chat=$chat;
+                $contacto->exist=$exist;
+                $contacto->is_assign=$is_assign;
+            }
+        }
 
         return $contactos;
     }
@@ -49,6 +80,7 @@ class ContactController extends Controller
                 $query->where('id',request('id'));
             })
             ->paginate(7);
+            
         }else{
             $contacts=Contact::when(request()->filled('name'),function($query){
                 $query->where('name','REGEXP',request('name'));
