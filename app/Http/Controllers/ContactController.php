@@ -51,6 +51,7 @@ class ContactController extends Controller
                 $exist=true;
             }
 
+
             foreach($contactos as $contacto){
                 if($contacto->user_id==Auth::user()->id){
                     $is_assign=true;
