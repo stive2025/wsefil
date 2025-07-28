@@ -48,7 +48,7 @@ class ContactController extends Controller
                 ->paginate(7);
             
             if(count($contactos)>0){
-                $exits=true;
+                $exist=true;
             }
 
             foreach($contactos as $contacto){
