@@ -21,7 +21,7 @@ class ContactController extends Controller
                     $query->where('name','REGEXP',request('name'));
                 })
                 ->when(request()->filled('phone'),function($query){
-                    $query->where('phone','REGEXP',request('phone'));
+                    $query->where('phone_number','REGEXP',request('phone'));
                 })
                 ->paginate(7);
             
@@ -42,7 +42,7 @@ class ContactController extends Controller
                     $query->where('name','REGEXP',request('name'));
                 })
                 ->when(request()->filled('phone'),function($query){
-                    $query->where('phone','REGEXP',request('phone'));
+                    $query->where('phone_number','REGEXP',request('phone'));
                 })
                 ->where('user_id',Auth::user()->id)
                 ->paginate(7);
