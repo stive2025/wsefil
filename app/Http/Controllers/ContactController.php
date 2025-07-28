@@ -13,7 +13,6 @@ class ContactController extends Controller
      */
     public function index()
     {
-        $exist=false;
         $is_assign=false;
 
         if(Auth::user()->tokenCan('chats.filter.agent')){
@@ -26,14 +25,12 @@ class ContactController extends Controller
                 ->paginate(7);
             
             if(count($contactos)>0){
-                $exist=true;
                 $is_assign=true;
             }
 
             foreach($contactos as $contacto){
                 $chat=$contacto->find($contacto->id)->chats()->first();
                 $contacto->chat=$chat;
-                $contacto->exist=$exist;
                 $contacto->is_assign=$is_assign;
             }
 
@@ -45,10 +42,6 @@ class ContactController extends Controller
                     $query->where('phone_number','REGEXP',request('phone'));
                 })
                 ->paginate(7);
-            
-            if(count($contactos)>0){
-                $exist=true;
-            }
 
             foreach($contactos as $contacto){
                 if($contacto->user_id==Auth::user()->id){
@@ -57,7 +50,6 @@ class ContactController extends Controller
 
                 $chat=$contacto->find($contacto->id)->chats()->first();
                 $contacto->chat=$chat;
-                $contacto->exist=$exist;
                 $contacto->is_assign=$is_assign;
             }
         }
