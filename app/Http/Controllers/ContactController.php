@@ -26,7 +26,7 @@ class ContactController extends Controller
                 ->paginate(7);
             
             if(count($contactos)>0){
-                $exits=true;
+                $exist=true;
                 $is_assign=true;
             }
 
@@ -50,7 +50,6 @@ class ContactController extends Controller
             if(count($contactos)>0){
                 $exist=true;
             }
-
 
             foreach($contactos as $contacto){
                 if($contacto->user_id==Auth::user()->id){
