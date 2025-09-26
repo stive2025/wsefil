@@ -9,18 +9,10 @@ use App\Models\Message;
 use App\Models\User;
 use App\Services\MessageService;
 use App\Services\SocketService;
-use App\Services\MessageService;
-use App\Services\SocketService;
 use Illuminate\Http\Request;
 
 class MessageController extends Controller
 {
-    protected SocketService $socket;
-    
-    public function __construct(SocketService $socket){
-        $this->socket=$socket;
-    }
-
     protected SocketService $socket;
     
     public function __construct(SocketService $socket){
@@ -33,15 +25,6 @@ class MessageController extends Controller
     }
     
     public function connectmessage(Request $request){
-        $message_service=new MessageService();
-        $message=$message_service->handleMessage($this->socket,$request);
-        return $message;
-    }
-
-    // public function store(Request $request)
-    // {
-    //     $chat_id=0;
-    //     $user_id=null;
         $message_service=new MessageService();
         $message=$message_service->handleMessage($this->socket,$request);
         return $message;
