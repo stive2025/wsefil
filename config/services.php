@@ -34,5 +34,7 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
-
+    'websocket' => [
+        'ip' => env('WS_ROOT', 'ws://127.0.0.1:8083'),
+    ],
 ];

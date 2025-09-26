@@ -13,9 +13,6 @@ use Illuminate\Support\Facades\Auth;
 
 class ChatController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-    */
     public function index()
     {
 
@@ -143,9 +140,6 @@ class ChatController extends Controller
         return $chats;
     }
     
-    /**
-     * Store a newly created resource in storage.
-    */
     public function store(Request $request)
     {
         $create_chat=Chat::create($request->all());
@@ -157,9 +151,6 @@ class ChatController extends Controller
         ],200);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Chat $id)
     {
         $chat=$id;
@@ -248,7 +239,6 @@ class ChatController extends Controller
 
     public function transfer(Request $request, string $id)
     {
-        //  Revisamos si hay mensaje privado
         $last_message="";
 
         $id=Chat::where('id',$id)->first();
@@ -292,23 +282,9 @@ class ChatController extends Controller
                 "user_id"=>$request->to
             ]);
             
-
         return response()->json([
             "status"=>200,
             "message"=>"Chat transferido."
-        ],200);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Chat $id)
-    {
-        $id->delete();
-
-        return response()->json([
-            "status"=>200,
-            "message"=>"Chat eliminado."
         ],200);
     }
 }
