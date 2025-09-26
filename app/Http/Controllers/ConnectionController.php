@@ -45,26 +45,17 @@ class ConnectionController extends Controller
      */
     public function store(Request $request)
     {
-
-        $connection=Connection::first();
-
-        //if($connection==null){
-            $create_connection=Connection::create([
-                'qr_code'=>$request->code_qr,
-                'name'=>$request->name,
-                'greeting_message'=>$request->greeting_message,
-                'farewell_message'=>$request->farewell_message,
-                'status'=>"PENDING"
-            ]);
-        // }else{
-        //     $update_connection=Connection::where('id',$connection->id)->update([
-        //         'qr_code'=>$request->code_qr,
-        //         'status'=>$request->status
-        //     ]);
-        // }
+        $create_connection=Connection::create([
+            'qr_code'=>$request->code_qr,
+            'name'=>$request->name,
+            'greeting_message'=>$request->greeting_message,
+            'farewell_message'=>$request->farewell_message,
+            'status'=>"PENDING"
+        ]);
 
         return response()->json([
             "status"=>200,
+            "data"=>$create_connection,
             "message"=>"Conexión creada correctamente."
         ],200);
     }
@@ -94,13 +85,5 @@ class ConnectionController extends Controller
             "status"=>200,
             "message"=>"Estado de conexión actualizado."
         ],200);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }

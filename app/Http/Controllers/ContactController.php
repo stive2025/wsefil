@@ -101,9 +101,6 @@ class ContactController extends Controller
         return $contacts;
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {   
 
@@ -174,17 +171,11 @@ class ContactController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-    */
     public function show(Contact $id)
     {
         return $id;
     }
     
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Contact $id)
     {
         if($id->count_edits>0){
@@ -205,17 +196,5 @@ class ContactController extends Controller
             ],200);
 
         }
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Contact $id)
-    {
-        $id->delete();
-        return response()->json([
-            "status"=>200,
-            "message"=>"Contacto eliminado."
-        ],200);
     }
 }
